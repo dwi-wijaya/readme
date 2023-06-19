@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@ckeditor/ckeditor5-easy-image": "^35.4.0"
+  }
+}
