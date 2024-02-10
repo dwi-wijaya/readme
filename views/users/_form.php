@@ -8,11 +8,11 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="users-form">
+<div class="card card-body">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'iduser')->textInput() ?>
+    <?= $form->field($model, 'username')->textInput() ?>
 
     <?= $form->field($model, 'first_name')->textInput() ?>
 

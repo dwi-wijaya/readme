@@ -39,7 +39,12 @@ class MenuController extends LayoutController
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => mstMenu::find(),
+            'query' => mstMenu::find()->orderBy([
+                'type' => SORT_ASC,
+                'parent' => SORT_ASC,
+                'CAST(`order` AS UNSIGNED)' => SORT_ASC,
+            ]),
+        
             /*
             'pagination' => [
                 'pageSize' => 50

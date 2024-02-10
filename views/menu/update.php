@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Update Mst Menu: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Mst Menus', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'idmenu' => $model->idmenu]];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->idmenu]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="mst-menu-update">

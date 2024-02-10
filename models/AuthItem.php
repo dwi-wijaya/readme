@@ -2,7 +2,10 @@
 
 namespace app\models;
 
+use Exception;
 use Yii;
+use yii\rbac\Item;
+use mdm\admin\components\Helper;
 
 /**
  * This is the model class for table "auth_item".
@@ -27,6 +30,9 @@ class AuthItem extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    const TYPE_ROLE = 1;
+    const TYPE_PERMISSION = 2;
+
     public static function tableName()
     {
         return 'auth_item';
@@ -122,5 +128,88 @@ class AuthItem extends \yii\db\ActiveRecord
     public function getRuleName()
     {
         return $this->hasOne(AuthRule::class, ['name' => 'rule_name']);
+    }
+    public function getItems()
+    {
+        // $manager = Configs::authManager();
+        // $advanced = Configs::instance()->advanced;
+        $available = [];
+        // echo '<pre>';print_r($this);die;
+        if ($this->type == Item::TYPE_ROLE) {
+            $roles = AuthItem::find()->where(['type' => self::TYPE_ROLE])->asArray()->indexBy('name')->all();
+            foreach (array_keys($roles) as $name) {
+                $available[$name] = 'role';
+            }
+        }
+        // echo '<pre>';print_r($available);die;
+        $permission = AuthItem::find()->where(['type' => self::TYPE_PERMISSION])->asArray()->indexBy('name')->all();
+
+        foreach (array_keys($permission) as $name) {
+            $available[$name] = $name[0] == '/' ? 'route' : 'permission';
+        }
+        $assigned = [];
+        $children = AuthItem::find()->alias('auth')->innerJoin(['child' => AuthItemChild::tableName()], 'auth.name=child.child')->where(['child.parent' => $this->name])->asArray()->indexBy('name')->all();
+
+
+        foreach ($children as $item) {
+            $assigned[$item['name']] = $item['type'] == 1 ? 'role' : ($item['name'][0] == '/'
+                ? 'route' : 'permission');
+            unset($available[$item['name']]);
+        }
+        unset($available[$this->name]);
+        ksort($available);
+        ksort($assigned);
+        return [
+            'available' => $available,
+            'assigned' => $assigned,
+        ];
+    }
+    public function getUsers(){
+        // echo '<pre>';print_r($this);die;
+        $users = AuthAssignment::find()->where(['item_name' => $this->name])->asArray()->all();
+        return $users;
+    }
+    public function add($item)
+    {
+        $this->type = AuthItem::TYPE_PERMISSION;
+        $this->name = $item;
+        // echo '<pre>';print_r($this);die;
+
+        $this->save();
+    }
+    public function addChildren($items)
+    {
+        $success = 0;
+        
+        if ($this) {
+            foreach ($items as $name) {
+                $model = new AuthItemChild();
+            //    echo '<pre>';print_r($this);die;
+            $model->addChild($this, $name);
+                try {
+                    $success++;
+                } catch (\Exception $exc) {
+                    Yii::error($exc->getMessage(), __METHOD__);
+                }
+            }
+        }
+        if ($success > 0) {
+            Helper::invalidate();
+        }
+        return $success;
+    }
+    
+    public function removeChildren($items)
+    {
+        $children = AuthItemChild::findAll(['child' => $items, 'parent' => $this->name]);
+        // echo '<pre>';print_r($children);die;
+        foreach ($children as $child) {
+            try {
+                $child->delete();
+            } catch (Exception $exc) {
+                Yii::error($exc->getMessage(), __METHOD__);
+            }
+        }
+        Helper::invalidate();
     }
 }

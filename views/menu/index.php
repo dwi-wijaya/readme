@@ -1,6 +1,7 @@
 <?php
 
 use app\models\mstMenu;
+use kartik\grid\GridView as GridGridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -29,32 +30,33 @@ $this->title = 'Menu';
 
         <hr>
 
-        <?= GridView::widget([
+        <?= GridGridView::widget([
             'dataProvider' => $dataProvider,
             'tableOptions' => ['class' => 'table table-hover table-striped table-bordered'],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
+                ['attribute' => 'parent', 'group' => true],
+                'name',
+                [
+                    'attribute' => 'route',
+                    'value' => function ($m) {
+                        return Html::a($m['route'], Url::to($m['route']));
+                    },
+                    'format' => 'html'
+                ],
+                // 'url:url',
+                'order',
                 [
                     'attribute' => 'type',
                     'value' => function ($m) {
                         if ($m->type == 0) {
                             return "<span class= 'badge badge-secondary p-2'>GUEST</span>";
                         } else {
-                            return "<span class= 'badge badge-success p-2'>ADMIN</span>";
+                            return "<span class= 'badge badge-success p-2'>AUTHORIZED</span>";
                         }
                     },
                     'format' => 'html',
                 ],
-                'name',
-                [
-                    'attribute' => 'url',
-                    'value' => function ($m) {
-                        return Html::a($m['url'], Url::to($m['url']));
-                    },
-                    'format' => 'html'
-                ],
-                // 'url:url',
-                'order',
                 [
                     'class' => 'app\helpers\ButtonActionColumn',
                     'contentOptions' => ['class' => 'text-center', 'style' => 'width:160px;vertical-align:middle'],
