@@ -29,10 +29,10 @@ $alertstat = [
     Utils::STAT_REVISION
 ];
 
-User::me()->role == 1 ? $toolbar = ['toolbar' => [
+in_array(User::me()->role->item_name, [Utils::ROLE_AUTHOR, Utils::ROLE_ADMIN]) ? $toolbar = ['toolbar' => [
     ['Styles', '-',]
 ]] : null;
-User::me()->role == 2 || User::me()->role == 0 ? $toolbar = ['extraPlugins' => 'colorbutton,colordialog,iframe,justify'] : null;
+in_array(User::me()->role->item_name, [Utils::ROLE_EDITOR, Utils::ROLE_ADMIN]) ? $toolbar = ['extraPlugins' => 'colorbutton,colordialog,iframe,justify'] : null;
 
 ?>
 <style>
@@ -66,7 +66,7 @@ User::me()->role == 2 || User::me()->role == 0 ? $toolbar = ['extraPlugins' => '
                 <i class="fa-solid fa-circle-info"></i>&nbsp; <?= Html::encode($approval->reason->reason); ?>
                 <br>
                 <li class="fa-regular fa-sticky-note"></li>&nbsp; Note :
-                 <?= $approval->note; ?>
+                <?= $approval->note; ?>
             </div>
         <?php endif ?>
 
@@ -77,8 +77,9 @@ User::me()->role == 2 || User::me()->role == 0 ? $toolbar = ['extraPlugins' => '
 
 
         <?= $form->field($model, 'title')->textInput(['id' => 'title']) ?>
+        <?= $form->field($model, 'slug')->textInput(['id' => 'slug', 'readonly' => true]) ?>
 
-        <?= $form->field($model, 'subtitle')->textInput() ?>
+        <?= $form->field($model, 'subtitle')->textarea(['rows' => 2]) ?>
 
         <?= $form->field($model, 'article_tag')->widget(Select2::classname(), [
             'data' => $tag,
@@ -107,7 +108,6 @@ User::me()->role == 2 || User::me()->role == 0 ? $toolbar = ['extraPlugins' => '
             ],
         ]); ?>
 
-        <?= $form->field($model, 'slug')->textInput(['id' => 'slug']) ?>
 
         <?= $form->field($model, 'status')->widget(Select2::classname(), [
             'data' => $status,
