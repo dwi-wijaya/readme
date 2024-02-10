@@ -2,6 +2,7 @@
 
 use app\helpers\Utils;
 use richardfan\widget\JSRegister;
+use yii\base\View;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
@@ -9,7 +10,7 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\models\Article $model */
 $tag = explode(', ', $model->tag);
-
+$this->registerCssFile('@web/css/pages/detail.css');
 $this->title = $model->title;
 // $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
 // $this->params['breadcrumbs'][] = $this->title;
@@ -18,108 +19,10 @@ $this->title = $model->title;
 $c_bookmark = $bookmark == 'true' ? 'fa-solid' : 'fa-regular';
 $c_like = $like == 'true' ? 'fa-solid' : 'fa-regular';
 // echo '<pre>';print_r($urlfrom);die;
+$guest_link = Yii::$app->user->isGuest ? Url::to(['site/login']) : '#'; 
 ?>
 <style>
-    article {
-        margin-top: 2.5rem;
-    }
 
-    @media (max-width:767px) {
-        .utils-action {
-            width: 40px !important;
-            height: 40px !important;
-            margin-right: 1.2rem !important;
-            outline: 5px white solid !important;
-
-        }
-
-        .article-card {
-            padding: 1rem !important;
-        }
-
-        .related {
-            margin-top: 2rem;
-        }
-
-        .items {
-            flex: 0 0 50%;
-        }
-
-        .related-article {
-            gap: 1rem;
-            height: fit-content !important;
-            display: flex !important;
-            overflow-y: hidden;
-            overflow-x: auto;
-            padding-right: 1rem;
-        }
-
-        .related-article .items {
-            min-height: 66.6% !important;
-        }
-
-    }
-
-    h1 {
-        font-weight: 900;
-    }
-
-    .hr {
-        margin: 0;
-    }
-
-    .badge {
-        width: fit-content;
-    }
-
-    .tag {
-        display: flex;
-    }
-
-    .related-article {
-        height: 100vh;
-        overflow-y: auto;
-        padding-right: 1rem;
-    }
-
-    .related-article .card-body {
-        min-height: auto !important;
-    }
-
-    .bookmarked {
-        background-color: #7D94E2;
-        color: white;
-    }
-
-    .article-card {
-        padding: 3rem;
-    }
-
-    .utils {
-        position: absolute;
-        top: -25px;
-        right: 0;
-
-    }
-
-    .utils-action {
-        background: white;
-        float: right;
-        display: flex;
-        padding: .7rem;
-        border: 1px #7D94E2 solid;
-        margin-right: 3rem;
-        border-radius: 25px;
-        outline: 10px white solid;
-        width: 50px;
-        height: 50px;
-        align-items: center;
-        justify-content: center;
-    }
-
-    pre {
-        border-radius: 6px;
-    }
 </style>
 <article class="article-view">
     <div class="row">
@@ -127,13 +30,13 @@ $c_like = $like == 'true' ? 'fa-solid' : 'fa-regular';
             <div class="article-content card card-body  b-10">
                 <div class="utils">
                     <div class="d-flex">
-                        <a data="<?= $model->idarticle; ?>" id="bookmark" href="#"><i class="utils-action <?= $c_bookmark; ?> fa-bookmark"></i></a>
-                        <a data="<?= $model->idarticle; ?>" id="heart" href="#"><i class="utils-action <?= $c_like; ?> fa-heart"></i></a>
+                        <a data="<?= $model->idarticle; ?>" id="bookmark" href="<?= $guest_link ?>"><i class="utils-action <?= $c_bookmark; ?> fa-bookmark"></i></a>
+                        <a data="<?= $model->idarticle; ?>" id="heart" href="<?= $guest_link ?>"><i class="utils-action <?= $c_like; ?> fa-heart"></i></a>
                     </div>
                 </div>
-                <header>
-                    <img src="<?= Utils::baseUploadsProfile($model->user->profile_picture); ?>" alt="" srcset="">
-                    <small class="text-muted">Author : <?= $model->user->first_name . ' ' . $model->user->last_name . ' - ' . Yii::$app->formatter->asDate($model->created_at); ?></small>
+                <div>
+                    <img width="20" height="20" src="<?= Utils::baseUploadsProfile($model->user->profile_picture); ?>" alt="" srcset="">
+                    <small class="text-muted"> <?= $model->user->first_name . ' ' . $model->user->last_name . ' - ' . Yii::$app->formatter->asDate($model->created_at); ?></small>
                     <h1><?= $model->title; ?></h1>
                     <hr class="hr">
                     <div class="tag mt-3">
@@ -141,7 +44,7 @@ $c_like = $like == 'true' ? 'fa-solid' : 'fa-regular';
                             <a href="<?= Url::to(['/site/index?Article%5Bsearch%5D=' . $tag]); ?>"><span class="badge bg-main badge-success fw-500 p-2 mr-1"># <?= $tag; ?></span></a>
                         <?php endforeach ?>
                     </div>
-                </header>
+                </div>
                 <div class="content mt-5">
                     <img class=" b-10 w-100" src="<?= Utils::baseUploadsthumbnail($model->thumbnail); ?>" alt="">
                     <div class="mt-5">
