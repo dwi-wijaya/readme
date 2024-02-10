@@ -2,10 +2,10 @@
 
 use app\models\Article;
 use app\widgets\FreezableGridView;
-use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
+use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -26,14 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col">
                 <p class="float-right">
-                    <?= Html::a('<i class="fa fa-plus"></i> &nbsp; Menu', ['create'], ['class' => 'btn trans fw-300 text-upper create-btn btn-success', 'style' => 'float:right;']) ?>
+                    <?= Html::a('<i class="fa fa-plus"></i> &nbsp; Article', ['create'], ['class' => 'btn trans fw-300 text-upper create-btn btn-success', 'style' => 'float:right;']) ?>
                 </p>
             </div>
         </div>
         <hr>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
-            'freezeColumns' => [2,1,3],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
@@ -42,14 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'created_at',
                 'tag',
                 // 'content:ntext',
-                'author_id',
                 // 'thumbnail',
-                'cetegory',
-                'updated_at',
-                'status',
-                'slug',
-                'editor_id',
-                'approved_at',
+                'cetegory.category',
                 [
                     'class' => 'app\helpers\ButtonActionColumn',
                     'contentOptions' => ['class' => 'text-center', 'style' => 'width:160px;vertical-align:middle'],
