@@ -6,55 +6,9 @@ use app\models\User;
 use mdm\admin\components\Helper;
 use richardfan\widget\JSRegister;
 use yii\helpers\Url;
-
+$this->registerCssFile('@web/css/pages/sidebar.css');
 ?>
-<style>
-    aside {
-        z-index: 50 !important;
-        /* background-color: #2C74B3 !important; */
-    }
 
-    .main-sidebar .sidebar {
-        margin-top: 4.1rem;
-    }
-
-    .sidebar .nav-link.active {
-        background-color: #fff !important;
-        box-shadow: none !important;
-    }
-
-    .sidebar a.nav-link.active {
-        background-color: #fff !important;
-        color: black !important;
-    }
-
-    .sidebar .nav-link p {
-        white-space: nowrap;
-    }
-
-    .user-panel {
-        background-color: #fff !important;
-        border-radius: 5px;
-    }
-
-    .image img {
-        border-radius: 10%;
-    }
-
-    .info a {
-        color: black !important;
-        font-weight: 300;
-        letter-spacing: 2px;
-    }
-
-    .nav .nav-treeview {
-        display: block;
-        background-color: #4a535c !important;
-        border-radius: 5px;
-    }
-    .nav-link:hover{
-    }
-</style>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
@@ -66,43 +20,26 @@ use yii\helpers\Url;
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel pt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img style="" src="<?= Utils::baseUploadsProfile(User::me()->profile_picture); ?>" alt="" class="img-circle elevation-2">
+                <img style="" src="<?= Utils::baseUploadsProfile(User::me()->profile_picture); ?>" alt="" class="img-circle ">
 
             </div>
-            <div class="info">
-                <a href="<?= Url::to(['/users/account', 'id' => User::me()->username]); ?>" class="d-block"><?= User::me()->first_name . ' ' . User::me()->last_name; ?></a>
+            <div class="white">
+                <a style="padding-top: 5px;padding-left: 15px;" href="<?= Url::to(['/users/account', 'id' => User::me()->username]); ?>" class="d-block"><?= User::me()->first_name . ' ' . User::me()->last_name; ?>
+                </a>
+
             </div>
         </div>
 
-        <!-- SidebarSearch Form -->
-        <!-- href be escaped -->
-        <!-- <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div> -->
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <?php
 
-            
-            $item = mstMenu::getNavbarLTE();
-            // echo app\components\Nav::widget([
 
+            $item = mstMenu::getNavbarLTE();
+            
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => $item,
-                // 'options' => [
-                //     'class' => 'nav nav-sidebar nav-legacy flex-column nav-compact', //'nav navbar-nav ml-auto nav-pills nav-sidebar flex-column nav-child-indent nav-legacy',
-                //     'data-widget' => 'treeview',
-                //     // 'role' => 'menu',
-                //     'data-accordion' => false
-                // ]
             ]);
             ?>
         </nav>
