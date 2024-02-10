@@ -25,23 +25,13 @@ $this->title = 'Readme';
     </div>
     <div class="most-viewed mt-4">
         <div class="row">
-            <?php foreach ($following as $t) : ?>
-                <div class="col-6 col-md-4 col-lg-4 mb-4">
-                    <div class="article-card card card-body b-10">
-                        <div class="card-img">
-                            <img class="thumbnail b-10 w-100" src="<?= Utils::baseUploadsthumbnail($t['thumbnail']); ?>" alt="" class="b-10">
-                        </div>
-                        <div class="title mt-3">
-                            <a href="">
-                                <p class="m-0"><b><?= $t['title']; ?></b></p>
-                            </a>
-                            <small class="text-muted sub-title">
-                                <?= substr($t['subtitle'], 0, 100) . ' . . . . .'; ?>
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach ?>
+            <?php if ($following) : ?>
+                <?php foreach ($following as $t) : ?>
+                    <?= $this->render('_article', ['article' => $t]) ?>
+                <?php endforeach ?>
+            <?php else : ?>
+                <p>No articles available at the moment. Please check back later.</p>
+            <?php endif ?>
         </div>
 
         <div class="mt-4">

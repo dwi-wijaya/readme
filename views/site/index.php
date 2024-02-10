@@ -28,23 +28,13 @@ $query_string = (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : nu
         </div>
         <div class="most-viewed mt-4">
             <div class="row">
-                <?php foreach ($top as $t) : ?>
-                    <div class="col-6 col-md-4 col-lg-4 mb-4">
-                        <div class="article-card card card-body b-10">
-                            <div class="card-img">
-                                <img class="thumbnail b-10 w-100" src="<?= Utils::baseUploadsthumbnail($t['thumbnail']); ?>" alt="" class="b-10">
-                            </div>
-                            <div class="title mt-3">
-                                <a href="<?= Url::to(['/article/detail', 'id' => $t['slug']]); ?>">
-                                    <p class="m-0"><b><?= $t['title']; ?></b></p>
-                                </a>
-                                <small class="text-muted sub-title">
-                                    <?= $t['subtitle'] ?>
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach ?>
+                <?php if ($top) : ?>
+                    <?php foreach ($top as $t) : ?>
+                        <?= $this->render('_article', ['article' => $t]) ?>
+                    <?php endforeach ?>
+                <?php else : ?>
+                    <p>No articles available at the moment. Please check back later.</p>
+                <?php endif ?>
             </div>
         </div>
     <?php endif ?>
@@ -59,25 +49,13 @@ $query_string = (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : nu
     </div>
     <div class="most-viewed mt-4">
         <div class="row">
-            <?php foreach ($latest as $t) : ?>
-                <div class="col-6 col-md-4 col-lg-4 mb-4">
-                    <div class="article-card card card-body b-10">
-                        <div class="card-img">
-                            <a href="<?= Url::to(['/article/detail', 'id' => $t['slug']]); ?>">
-                                <img class="thumbnail b-10 w-100" src="<?= Utils::baseUploadsthumbnail($t['thumbnail']); ?>" alt="" class="b-10">
-                            </a>
-                        </div>
-                        <div class="title mt-3">
-                            <a href="<?= Url::to(['/article/detail', 'id' => $t['slug']]); ?>">
-                                <p class="m-0"><b><?= $t['title']; ?></b></p>
-                            </a>
-                            <small class="text-muted sub-title">
-                                <?= $t['subtitle'] ?>
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach ?>
+            <?php if ($latest) : ?>
+                <?php foreach ($latest as $t) : ?>
+                    <?= $this->render('_article', ['article' => $t]) ?>
+                <?php endforeach ?>
+            <?php else : ?>
+                <p>No articles available at the moment. Please check back later.</p>
+            <?php endif ?>
         </div>
         <div class="mt-4">
             <?= \yidas\widgets\Pagination::widget([

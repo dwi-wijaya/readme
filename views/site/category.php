@@ -30,23 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="article mt-4">
 
             <div class="row">
-                <?php foreach ($article as $a) : ?>
-                    <div class="col-12 col-md-4 col-lg-3 mt-4">
-                        <div class="article-card card card-body b-10">
-                            <div class="card-img">
-                                <img class="thumbnail b-10 w-100" src="<?= Utils::baseUploadsthumbnail($a['thumbnail']); ?>" alt="" class="b-10">
-                            </div>
-                            <div class="title mt-3">
-                                <a href="<?= Url::to(['/article/detail', 'id' => $a['idarticle']]); ?>">
-                                    <h3 class="m-0 card-title"><b><?= $a['title']; ?></b></h3>
-                                </a>
-                                <p class="text-muted card-subtitle">
-                                    <?= substr($a['subtitle'], 0, 125) . ' . . . . .'; ?>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach ?>
+                <?php if ($article) : ?>
+                    <?php foreach ($article as $t) : ?>
+                        <?= $this->render('_aticle', ['article' => $t]) ?>
+                    <?php endforeach ?>
+                <?php else : ?>
+                    <p>No articles available at the moment. Please check back later.</p>
+                <?php endif ?>
             </div>
             <div class="mt-4">
                 <?= \yidas\widgets\Pagination::widget([
