@@ -31,7 +31,7 @@ $this->title = 'Users';
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-                'iduser',
+                'username',
                 'first_name',
                 'last_name',
                 // 'password',
