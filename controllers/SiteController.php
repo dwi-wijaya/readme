@@ -6,6 +6,7 @@ use app\helpers\Utils;
 use app\models\Article;
 use app\models\Assets;
 use app\models\AuthAssignment;
+use app\models\AuthForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -74,62 +75,7 @@ class SiteController extends LayoutController
      */
     public function actionIndex()
     {
-        $me = mstMenu::getNavbarLTE();
-        $m = [
-            [
-                'label' => 'Starter Pages',
-                'icon' => 'tachometer-alt',
-                'badge' => '<span class="right badge badge-info">2</span>',
-                'items' => [
-                    ['label' => 'Active Page', 'url' => ['site/index'], 'iconStyle' => 'far'],
-                    ['label' => 'Inactive Page', 'iconStyle' => 'far'],
-                ]
-            ],
-            ['label' => 'Simple Link', 'icon' => 'th', 'badge' => '<span class="right badge badge-danger">New</span>'],
-            ['label' => 'Yii2 PROVIDED', 'header' => true],
-            ['label' => 'Login', 'url' => ['site/login'], 'icon' => 'sign-in-alt', 'visible' => Yii::$app->user->isGuest],
-            ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
-            ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank'],
-            ['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
-            [
-                'label' => 'Level1',
-                'icon' => 'user',
-                'items' => [
-                    ['label' => 'Level2', 'iconStyle' => 'far'],
-                    [
-                        'label' => 'Level2',
-                        'iconStyle' => 'far',
-                        'items' => [
-                            ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
-                            ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
-                            ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle']
-                        ]
-                    ],
-                    ['label' => 'Level2', 'iconStyle' => 'far']
-                ]
-            ],
-            [
-                'label' => 'Level2',
-                'items' => [
-                    ['label' => 'Level2', 'iconStyle' => 'far'],
-                    [
-                        'label' => 'Level2',
-                        'iconStyle' => 'far',
-                        'items' => [
-                            ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
-                            ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
-                            ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle']
-                        ]
-                    ],
-                    ['label' => 'Level2', 'iconStyle' => 'far']
-                ]
-            ],
-            ['label' => 'Level1'],
-            ['label' => 'LABELS', 'header' => true],
-            ['label' => 'Important', 'iconStyle' => 'far', 'iconClassAdded' => 'text-danger'],
-            ['label' => 'Warning', 'iconClass' => 'nav-icon far fa-circle text-warning'],
-            ['label' => 'Informational', 'iconStyle' => 'far', 'iconClassAdded' => 'text-info'],
-        ];
+
         $model = new Article();
         $model->load(Utils::req()->get());
         $mviewed = Article::getMostViewed();
@@ -166,7 +112,6 @@ class SiteController extends LayoutController
         $model->load(Utils::req()->get());
         $article = Article::search($model, $idcat);
         $cat = mstCategory::find()->all();
-
         $data = Utils::createPagination($article);
 
         return $this->render('explore', [
@@ -224,11 +169,13 @@ class SiteController extends LayoutController
      */
     public function actionLogin()
     {
+        $this->layout = '_blank.php';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $model = new LoginForm();
+        $model = new AuthForm();
+        $model->scenario = AuthForm::SCENARIO_SIGNIN;
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
@@ -238,7 +185,38 @@ class SiteController extends LayoutController
             'model' => $model,
         ]);
     }
+    public function actionSignup()
+    {
+        $this->layout = '_blank.php';
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+        $model = new AuthForm();
+        $model->scenario = AuthForm::SCENARIO_SIGNUP;
+        if ($this->request->isPost) {
+            $user = new User();
+            $role = new AuthAssignment();
+            if ($model->load($this->request->post()) && $model->validate()) {
+                $user->attributes = $model->attributes;
+                $user->created_at = date('Y-m-d h:i:s');
+                $user->profile_picture = 'user.png';
+                $user->password = Yii::$app->security->generatePasswordHash(md5($model->password));
+                $role->user_id = $user->username;
+                $role->item_name = Utils::ROLE_SUBCRIBER;
 
+                if ($user->save()) {
+                    $role->save();
+                    return $this->render('login', [
+                        'model' => $user,
+                    ]);
+                }
+            }
+        }
+
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
+    }
     /**
      * Logout action.
      *
@@ -279,30 +257,5 @@ class SiteController extends LayoutController
         return $this->render('about');
     }
 
-    public function actionSignup()
-    {
-        $user = new User();
-        $role = new AuthAssignment();
-        if ($this->request->isPost) {
-            if ($user->load($this->request->post())) {
-                $user->id = uniqid();
-                $user->created_at = date('Y-m-d h:i:s');
-                $user->profile_picture = 'user.png';
-
-                $role->user_id = $user->id;
-                $role->item_name = Utils::ROLE_SUBCRIBER;
-
-                if ($user->save()) {
-                    $role->save();
-                    return $this->render('login', [
-                        'model' => $user,
-                    ]);
-                }
-            }
-        }
-
-        return $this->render('signup', [
-            'model' => $user,
-        ]);
-    }
+    
 }

@@ -19,12 +19,13 @@ $this->title = 'Login';
     } */
 </style>
 <div class="site-login">
-    <div style="width: 35rem;" class="mx-auto card b-10">
+    <div style="" class="mx-auto card b-10">
 
         <div class="card-header">
 
             <img class="d-flex mx-auto" src="<?= Utils::baseUploadsStock('article.png'); ?>" width="50%" alt="">
-            <h1 class="fw-700 text-center mt-3">Welcome Back !!</h1>
+            <h1 class="fw-700 text-center mt-3 mb-0">Welcome Back!</h1>
+            <p class="m-0 text-center">Let's get started by signing in.</p>
         </div>
         <div class="card-body">
             <!-- <p class="">Please fill out the following fields to login:</p> -->
@@ -34,9 +35,9 @@ $this->title = 'Login';
 
             ]); ?>
 
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => 'Username'])->label(false) ?>
 
-            <?= $form->field($model, 'password')->passwordInput() ?>
+            <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password'])->label(false) ?>
             <p class="">
                 Dont have account yet ? <a href="<?= Url::to(['site/signup',]); ?>"><b>Sign-up</b> </a>
             </p>
