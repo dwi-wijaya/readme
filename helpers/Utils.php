@@ -199,7 +199,7 @@ class Utils
     }
     public static function fa($name, $bg = null)
     {
-        return Html::tag('i', null, ['class' => "cat-icon fa fa-$name", 'style' => "background-color:$bg"]);
+        return Html::tag('i', null, ['class' => "cat-icon fa p-2 fa-$name", 'style' => "background-color:$bg"]);
     }
 
     public static function createPagination($data)
