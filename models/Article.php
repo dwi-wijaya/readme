@@ -51,7 +51,7 @@ class Article extends \yii\db\ActiveRecord
             [['idarticle', 'title'], 'required'],
             [['idarticle', 'title', 'subtitle', 'tag', 'content', 'author_id', 'thumbnail', 'cetegory','idcat', 'status', 'slug', 'approved_by'], 'string'],
             [['created_at', 'updated_at', 'approved_at', 'article_tag', 'search',], 'safe'],
-            [['idarticle'], 'unique'],
+            [['title'], 'unique'],
             [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpeg,jpg'],
         ];
     }
@@ -82,12 +82,12 @@ class Article extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'author_id']);
+        return $this->hasOne(Users::className(), ['username' => 'author_id']);
     }
 
     public function getCategory()
     {
-        return $this->hasOne(mstCategory::className(), ['idcat' => 'idcat']);
+        return $this->hasOne(mstCategory::className(), ['idcategory' => 'idcat']);
     }
 
     public static function topArticle()
@@ -115,7 +115,7 @@ class Article extends \yii\db\ActiveRecord
     public static function getArticlebyuser($id)
     {
         $article = Article::find()
-            ->innerJoin(['a' => Users::find()->where(['id' => $id])], 'a.id=article.author_id')
+            ->innerJoin(['a' => Users::find()->where(['username' => $id])], 'a.username=article.author_id')
             ->orderBy(['created_at' => SORT_DESC]);
         return $article;
     }
@@ -128,7 +128,7 @@ class Article extends \yii\db\ActiveRecord
             ->select(['a.*', 't.total'])
             ->from(['a' => self::tableName()])
             ->innerJoin(['t' => $viewed], 'a.idarticle=t.idarticle')
-            ->innerJoin(['au' => Users::tableName()], 'au.id=a.author_id')
+            ->innerJoin(['au' => Users::tableName()], 'au.username=a.author_id')
             ->where(['author_id' => $id])
             ->orderBy(['total' => SORT_DESC])
             ->limit(4)
@@ -224,10 +224,7 @@ class Article extends \yii\db\ActiveRecord
         if ($file) {
             Utils::createDirectory('/uploads/article/thumbnail/');
 
-            $title = strtolower($model->title);
-            $title = preg_replace('/\s+/', '_', $title);
-            $title = Utils::getID() . '_' . $title;
-            $filename = $title . '.' . $file->extension;
+            $filename = uniqid() . '_' . $model->slug . '.' . $file->extension;;
             $model->thumbnail = $filename;
             $file->saveAs('./uploads/article/thumbnail/' . $filename);
         }

@@ -52,6 +52,7 @@ class Users extends \yii\db\ActiveRecord
             'first_name' => 'First Name',
             'last_name' => 'Last Name',
             'password' => 'Password',
+            'email' => 'Email',
             'bio' => 'Bio',
             'authKey' => 'Auth Key',
             'created_at' => 'Created At',
@@ -61,7 +62,7 @@ class Users extends \yii\db\ActiveRecord
     }
 
     public function getRole() {
-        return $this->hasOne(AuthAssignment::className(), ['user_id' => 'id']);
+        return $this->hasOne(AuthAssignment::className(), ['user_id' => 'username']);
     }
 
     

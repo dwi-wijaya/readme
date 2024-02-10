@@ -8,6 +8,7 @@ use Yii;
 class User extends Users  implements \yii\web\IdentityInterface
 
 {
+
     public static function tableName()
     {
         return 'user';
@@ -19,11 +20,12 @@ class User extends Users  implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['id', 'first_name', 'last_name', 'password', 'bio', 'role', 'authKey'], 'string'],
+            [['first_name', 'last_name', 'password', 'bio', 'authKey'], 'string'],
             [['created_at', 'updated_at', 'lastlogin'], 'safe'],
-            [['username'], 'unique']
+            ['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This username has already been taken.']
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -36,6 +38,7 @@ class User extends Users  implements \yii\web\IdentityInterface
             'last_name' => 'Last Name',
             'password' => 'Password',
             'bio' => 'Bio',
+            'email' => 'Email',
             'authKey' => 'Auth Key',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -58,7 +61,7 @@ class User extends Users  implements \yii\web\IdentityInterface
 
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id,]);
+        return static::findOne(['username' => $id,]);
     }
 
     public static function findByUsername($username)
@@ -83,7 +86,7 @@ class User extends Users  implements \yii\web\IdentityInterface
 
     public function getId()
     {
-        return $this->id;
+        return $this->username;
     }
 
     public function getAuthKey()
@@ -102,9 +105,9 @@ class User extends Users  implements \yii\web\IdentityInterface
      * @param string $password password to validate
      * @return bool if password provided is valid for current user
      */
-    public function validatePassword($password)
+    public function validatePassword($password, $hash)
     {
-        return $this->password === $password;
+        return Yii::$app->getSecurity()->validatePassword(md5($password), $hash);
     }
 
     public static function getProfile()

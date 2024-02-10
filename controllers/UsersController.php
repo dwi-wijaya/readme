@@ -264,7 +264,7 @@ class UsersController extends LayoutController
      */
     protected function findModel($id)
     {
-        if (($model = Users::find()->with('role')->where(['id' => $id])->one()) !== null) {
+        if (($model = Users::find()->with('role')->where(['username' => $id])->one()) !== null) {
             return $model;
         }
 
