@@ -119,7 +119,7 @@ class ArticleController extends LayoutController
             'dataProvider' => $dataProvider,
         ]);
     }
-    public function actionList_article()
+    public function actionListArticle()
     {
         $model = new Article();
         $id = User::me()->id;
@@ -195,18 +195,18 @@ class ArticleController extends LayoutController
     public function actionDetail($id)
     {
         $model = Article::find()->joinWith('user')->where(['slug' => $id])->one();
-        $related = Article::find()->where(['like', 'tag', $model->tag])->andWhere(['not in','idarticle' , $model->idarticle])->limit(9)->all();
+        $related = Article::find()->where(['like', 'tag', $model->tag])->andWhere(['not in', 'idarticle', $model->idarticle])->limit(9)->all();
         $app = new Approval();
 
         $bookmark = '';
         $like = '';
 
-        if(Yii::$app->user->isGuest){
+        if (Yii::$app->user->isGuest) {
             Trending::saveTransaction($model);
         } else {
             Trending::saveTransaction($model);
             $userId = User::me()->id;
-    
+
             $bookmark = Bookmark::find()->where(['iduser' => $userId, 'idarticle' => $model->idarticle])->one();
             $like = Like::find()->where(['iduser' => $userId, 'idarticle' => $model->idarticle])->one();
             $bookmark = $bookmark ? true : false;
@@ -295,7 +295,7 @@ class ArticleController extends LayoutController
             }
         } else {
             $model->loadDefaultValues();
-        }
+        } 
 
         return $this->render('create', [
             'model' => $model,
@@ -319,14 +319,15 @@ class ArticleController extends LayoutController
         $tag = ArrayHelper::map(mstTag::find()->all(), 'tagname', 'tagname');
         $cat = ArrayHelper::map(mstCategory::find()->all(), 'idcat', 'name');
         $approval = null;
-        if(in_array($model->status,[Utils::STAT_REJECT,Utils::STAT_REVISION])){
+        if (in_array($model->status, [Utils::STAT_REJECT, Utils::STAT_REVISION])) {
             $approval = Approval::find()->with('reason')->where(['idarticle' => $model->idarticle])->orderBy(['created_at' => SORT_DESC])->one();
         }
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->updated_at = date('Y-m-d h:i:s');
             $file = UploadedFile::getInstance($model, 'file');
             if ($file) {
-                $filename = $model->title . '.' . $file->extension;
+                is_file('./uploads/article/thumbnail/' . $model->thumbnail) && unlink('./uploads/article/thumbnail/' . $model->thumbnail);
+                $filename = uniqid() . '_' . $model->slug . '.' . $file->extension;;
                 $model->thumbnail = $filename;
 
                 $file->saveAs('./uploads/article/thumbnail/' . $filename);
