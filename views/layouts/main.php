@@ -16,6 +16,7 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\helpers\Url;
 
+$this->registerCssFile('@web/css/pages/main.css');
 AppAsset::register($this);
 
 $this->registerCsrfMetaTags();
@@ -24,6 +25,7 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+
 $profileUrl = Yii::$app->user->isGuest ? ['site/login'] : ['users/account', 'id' => User::me()->id];
 $profileImg = Yii::$app->user->isGuest ? Utils::baseUploadsStock('user.png') : Utils::baseUploadsStock('user.png');
 ?>
@@ -48,103 +50,9 @@ $profileImg = Yii::$app->user->isGuest ? Utils::baseUploadsStock('user.png') : U
 
     <!-- Import Font awesome -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
-
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        li a {
-            text-transform: capitalize;
-        }
-
-        .landing-img {
-            width: 50% ;
-            position: absolute;
-            right: 0;
-            bottom: -18rem;
-        }
-
-        @media screen and (max-width:767px) {
-            .landing-img {
-                width: 100% !important;
-                position: static !important;
-            }
-
-            .home {
-                height: 100vh !important;
-            }
-
-            .landing-img {
-                margin: auto;
-                display: flex;
-            }
-
-            .img img {
-                position: relative;
-                width: 75% !important;
-            }
-
-            .main-content {
-                margin-top: 4rem !important;
-                text-align: center;
-                display: table-footer-group;
-            }
-
-            .group-btn {
-                display: flex;
-                justify-content: center;
-                gap: 1rem;
-                margin-top: 2rem;
-            }
-            .w50 {
-                width: 50%;
-            }
-            .h50v {
-                width: 40vh;
-            }
-
-        }
-
-        .account {
-            width: 100%;
-        }
-
-        .account a {
-            float: right;
-        }
-
-        .home {
-            display: none;
-        }
-
-        .nav-container {
-            display: flex;
-            align-items: center;
-            padding: 0 !important;
-        }
-
-        .profile-navbar img {
-            width: 35px !important;
-        }
-
-        .home {
-            height: 50vh;
-            background-color: #0b2862;
-        }
-
         
 
-        .relative {
-            position: relative;
-        }
 
-        
-
-        .py-6 {
-            padding-top: 9rem;
-            padding-bottom: 6rem
-        }
 
     </style>
 
@@ -202,7 +110,7 @@ $profileImg = Yii::$app->user->isGuest ? Utils::baseUploadsStock('user.png') : U
     <footer id="footer" class="mt-auto py-3 bg-light">
         <div class="container">
             <div class="row text-muted">
-                <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
+                <div class="col-md-6 text-center text-md-start">&copy; Readme <?= date('Y') ?></div>
                 <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
             </div>
         </div>

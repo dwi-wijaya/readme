@@ -1,0 +1,91 @@
+li a {
+    text-transform: capitalize;
+}
+
+.landing-img {
+    width: 50% ;
+    position: absolute;
+    right: 0;
+    bottom: -18rem;
+}
+
+@media screen and (max-width:767px) {
+    .landing-img {
+        width: 100% !important;
+        position: static !important;
+    }
+
+    .home {
+        height: 100vh !important;
+    }
+
+    .landing-img {
+        margin: auto;
+        display: flex;
+    }
+
+    .img img {
+        position: relative;
+        width: 75% !important;
+    }
+
+    .main-content {
+        margin-top: 4rem !important;
+        text-align: center;
+        display: table-footer-group;
+    }
+
+    .group-btn {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+    .w50 {
+        width: 50%;
+    }
+    .h50v {
+        width: 40vh;
+    }
+
+}
+
+.account {
+    width: 100%;
+}
+
+.account a {
+    float: right;
+}
+
+.home {
+    display: none;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    padding: 0 !important;
+}
+
+.profile-navbar img {
+    width: 35px !important;
+}
+
+.home {
+    height: 50vh;
+    background-color: #0b2862;
+}
+
+
+
+.relative {
+    position: relative;
+}
+
+
+
+.py-6 {
+    padding-top: 9rem;
+    padding-bottom: 6rem
+}
