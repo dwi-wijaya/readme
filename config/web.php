@@ -1,5 +1,7 @@
 <?php
 
+use yii\swiftmailer\Mailer;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -27,13 +29,13 @@ $config = [
         ],
         
     ],
-    'as access' => [
-        'class' => 'mdm\admin\components\AccessControl',
-        'allowActions' => [
-            'site/*',
-            'article/detail'
-        ]
-    ],
+    // 'as access' => [
+    //     'class' => 'mdm\admin\components\AccessControl',
+    //     'allowActions' => [
+    //         'site/*',
+    //         'article/detail'
+    //     ]
+    // ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -50,10 +52,18 @@ $config = [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
-            'class' => \yii\symfonymailer\Mailer::class,
+            'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@app/mail',
             // send all mails to a file by default.
-            'useFileTransport' => true,
+            // 'useFileTransport' => true,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com', // SMTP host address
+                'username' => 'dwiwijayanto1198@gmail.com', // SMTP username
+                'password' => 'mnoe iagb kalc voes', // SMTP password
+                'port' => '587', // SMTP port (usually 587 for TLS/STARTTLS or 465 for SSL)
+                'encryption' => 'tls', // Encryption method (tls or ssl)
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

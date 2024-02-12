@@ -18,6 +18,7 @@ class m240208_154107_create_table_user extends Migration
                 'first_name' => $this->string(100),
                 'last_name' => $this->string(100),
                 'password' => $this->string(100),
+                'email' => $this->string(100),
                 'profile_picture' => $this->string(100),
                 'bio' => $this->string(255),
                 'status' => $this->string(8),

@@ -121,42 +121,22 @@ class Utils
     }
     public static function flashSuccess($description = 'Berhasil.')
     {
-        return Yii::$app->session->setFlash(Alert::TYPE_SUCCESS, [
-            [
-                'title' => 'Success!',
-                'text' => $description,
-            ]
-        ]);
+        return Yii::$app->session->setFlash(Alert::TYPE_SUCCESS, $description);
     }
 
     public static function flashWarning($description = 'Warning.')
     {
-        return Yii::$app->session->setFlash(Alert::TYPE_WARNING, [
-            [
-                'title' => 'Warning!',
-                'text' => $description,
-            ]
-        ]);
+        return Yii::$app->session->setFlash(Alert::TYPE_WARNING, $description);
     }
 
     public static function flashFailed($description = 'Error.')
     {
-        return Yii::$app->session->setFlash(Alert::TYPE_ERROR, [
-            [
-                'title' => 'Error!',
-                'text' => $description,
-            ]
-        ]);
+        return Yii::$app->session->setFlash(Alert::TYPE_ERROR, $description);
     }
 
     public static function flashInfo($description = 'Info.')
     {
-        return Yii::$app->session->setFlash(Alert::TYPE_INFO, [
-            [
-                'title' => 'Info!',
-                'text' => $description,
-            ]
-        ]);
+        return Yii::$app->session->setFlash(Alert::TYPE_INFO, $description);
     }
     public static function getStatus($stat)
     {
@@ -242,7 +222,7 @@ class Utils
         ];
         return $icon[$type] ? $icon[$type] : 'bell';
     }
-    public static function getNotiftext($type = null,$idarticle = null)
+    public static function getNotiftext($type = null, $idarticle = null)
     {
         $article = Article::find()->where(['idarticle' => $idarticle])->one();
 
@@ -271,18 +251,19 @@ class Utils
         $notif->sender_id = $sender;
         $notif->type = $type;
         $notif->icon = $icon;
-        $notif->text = self::getNotiftext($type,$idarticle);
+        $notif->text = self::getNotiftext($type, $idarticle);
         $notif->save();
     }
 
-    public static function time_elapsed_string($datetime, $full = false) {
+    public static function time_elapsed_string($datetime, $full = false)
+    {
         $now = new DateTime();
         $ago = new DateTime($datetime);
         $diff = $now->diff($ago);
-    
+
         $diff->w = floor($diff->d / 7);
         $diff->d -= $diff->w * 7;
-    
+
         $string = array(
             'y' => 'year',
             'm' => 'month',
@@ -299,8 +280,35 @@ class Utils
                 unset($string[$k]);
             }
         }
-    
+
         if (!$full) $string = array_slice($string, 0, 1);
         return $string ? implode(', ', $string) . ' ago' : 'just now';
+    }
+    function censorEmail($email)
+    {
+        // Split the email address into username and domain
+        list($username, $domain) = explode('@', $email);
+
+        // Determine the length of the username
+        $usernameLength = strlen($username);
+
+        // Censor part of the username
+        $censoredUsername = substr($username, 0, 3) . str_repeat('*', $usernameLength - 3);
+
+        // Generate the censored email
+        $censoredEmail = $censoredUsername . '@' . $domain;
+
+        // Return the censored email and label
+        return $censoredEmail;
+    }
+    public static function sendEmailOtp($to, $otpCode)
+    {
+        Yii::$app->mailer->compose()
+            ->setTo($to)
+            ->setFrom('dwiwijayanto1198@gmail.com')
+            ->setSubject('Password Reset OTP')
+            ->setTextBody('Your OTP code: ' . $otpCode)
+            ->send();
+        return true;
     }
 }

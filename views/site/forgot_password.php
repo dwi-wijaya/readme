@@ -5,7 +5,6 @@
 /** @var app\models\LoginForm $model */
 
 use app\helpers\Utils;
-use app\widgets\Alert;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -21,34 +20,24 @@ $this->title = 'Login';
 </style>
 <div class="site-login">
     <div style="" class="mx-auto card b-10">
-
-        <div class="card-header">
-
-            <img class="d-flex mx-auto" src="<?= Utils::baseUploadsStock('article.png'); ?>" width="50%" alt="">
-            <h1 class="fw-700 text-center mt-3 mb-0">Welcome Back!</h1>
-            <p class="m-0 text-center">Let's get started by signing in.</p>
-        </div>
         <div class="card-body">
+            <p class=><b>Forgot Your Password?</b></p>
+            <small class="mb-3">Don't worry! It happens to the best of us. Please enter your email address below, and we'll send you a link to reset your password.</small>
             <!-- <p class="">Please fill out the following fields to login:</p> -->
-            <?= Alert::widget() ?>
-
+            <hr>
             <?php $form = ActiveForm::begin([
                 'id' => 'login-form',
-
             ]); ?>
 
             <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => 'Username'])->label(false) ?>
+            <?= $form->field($model, 'email')->textInput(['autofocus' => true, 'placeholder' => 'Your Email'])->label(false) ?>
 
-            <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password'])->label(false) ?>
-            <p class="">
-                Dont have account yet ? <a href="<?= Url::to(['site/signup',]); ?>"><b>Sign-up</b> </a>
-            </p>
-            <a href="<?= Url::to('forgot-password') ?>">
-            <p>Forgot passowrd ?</p>
-            </a>
             <div class="form-group">
-                <?= Html::submitButton('<i class="fa-solid fa-right-to-bracket"></i> &nbsp;Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('<i class="fa-regular fa-envelope"></i> &nbsp;Submit', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
             </div>
+            <a class="text-center w-100" href="<?= Url::to(['site/login',]); ?>">
+                <li class="fa fa-chevron-left"></li> &nbsp;Back to Sign-in?
+            </a>
 
             <?php ActiveForm::end(); ?>
         </div>

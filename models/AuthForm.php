@@ -18,11 +18,14 @@ class AuthForm extends Model
     public $first_name;
     public $last_name;
     public $email;
+    public $otp;
     public $confirmPassword;
     public $rememberMe = true;
 
     const SCENARIO_SIGNIN = 'SIGN-IN';
     const SCENARIO_SIGNUP = 'SIGN-UP';
+    const SCENARIO_RESET_PASSWORD = 'reset-password';
+    const SCENARIO_FORGOT_PASSWORD = 'forgot_password';
 
     private $_user = false;
 
@@ -36,7 +39,13 @@ class AuthForm extends Model
             // username and password are both required
             [['username', 'password'], 'required', 'on' => self::SCENARIO_SIGNIN],
             [['username', 'password', 'first_name', 'email', 'confirmPassword'], 'required', 'on' => self::SCENARIO_SIGNUP],
+            [['username', 'email'],'required', 'on' => self::SCENARIO_FORGOT_PASSWORD],
+            [['username'], 'validateUsername', 'on' => self::SCENARIO_FORGOT_PASSWORD],
+            [['email'], 'validateEmail', 'on' => self::SCENARIO_FORGOT_PASSWORD],
+            [['email'], 'unique', 'on' => self::SCENARIO_SIGNUP, 'targetClass' => 'app\models\User', 'message' => 'This email address has already been taken.'],
             [['username'], 'unique', 'on' => self::SCENARIO_SIGNUP, 'targetClass' => '\app\models\User', 'targetAttribute' => 'username', 'message' => 'This username has already been taken.'],
+            [['password','confirmPassword'],'required','on' => self::SCENARIO_RESET_PASSWORD],
+            ['otp', 'safe'],
             ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
             // [['password', 'confirmPassword'], 'string', 'min' => 8],
             ['email', 'email'],
@@ -49,7 +58,26 @@ class AuthForm extends Model
         ];
     }
 
+    public function validateUsername($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $user = User::findOne(['username' => $this->username]);
+            if (!$user) {
+                $this->addError($attribute, 'Invalid Username.');
+            }
+        }
+    }
 
+    // Fungsi validasi untuk memeriksa apakah email cocok dengan username yang diberikan
+    public function validateEmail($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $user = User::findOne(['username' => $this->username]);
+            if ($user && $this->email !== $user->email) {
+                $this->addError($attribute, 'The email does not match the provided username.');
+            }
+        }
+    }
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
