@@ -58,9 +58,9 @@ $config = [
             // 'useFileTransport' => true,
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.gmail.com', // SMTP host address
-                'username' => 'dwiwijayanto1198@gmail.com', // SMTP username
-                'password' => 'mnoe iagb kalc voes', // SMTP password
+                'host' => $_ENV['MAILER_HOST'], // SMTP host address
+                'username' => $_ENV['MAILER_USERNAME'], // SMTP username
+                'password' => $_ENV['MAILER_PASSWORD'], // SMTP password
                 'port' => '587', // SMTP port (usually 587 for TLS/STARTTLS or 465 for SSL)
                 'encryption' => 'tls', // Encryption method (tls or ssl)
             ],
