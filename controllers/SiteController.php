@@ -23,6 +23,7 @@ use app\models\OtpCodes;
 use app\models\ResetPasswordTokens;
 use app\models\Trending;
 use app\models\User;
+use app\models\UserProgress;
 use app\models\Users;
 use PharIo\Manifest\Author;
 use yidas\widgets\Pagination;
@@ -98,6 +99,33 @@ class SiteController extends LayoutController
         ]);
     }
 
+    public function actionSaveProgressGuide()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $idguideList = Utils::req()->post('list_id');
+        $idguide = Utils::req()->post('guide_id');
+
+        $me = User::me();
+        $success = true; // Ganti dengan logika sesuai dengan kebutuhan Anda
+        $model = UserProgress::findOne(['user_id' => $me->username, 'idguide_list' => $idguideList]) ?: new UserProgress();
+        if ($model->isNewRecord) {
+            $model->iduser_progress = uniqid();
+            $model->user_id = $me->username;
+            $model->created_at = date('Y-m-d H:i:s');
+            $model->idguide = $idguide;
+            $model->idguide_list = $idguideList;
+            if (!$model->save()) {
+                $success = false;
+            }
+        } else {
+            if (!$model->delete()) {
+                $success = false;
+            }
+        }
+
+        return ['success' => $success];
+    }
     public function actionGuide($slug = null)
     {
         $model = new Guides();
@@ -106,8 +134,18 @@ class SiteController extends LayoutController
         $data = Utils::createPagination($guides);
         if ($slug) {
             $guides = $guides->one();
+            $marks = [];
+            if (!Yii::$app->user->isGuest) {
+                $marks = UserProgress::find()->select('idguide_list')
+                    ->where(['idguide' => $guides->idguide, 'user_id' => User::me()->username])
+                    ->indexBy('idguide_list')
+                    ->asArray()->all();;
+            }
             Trending::saveTransaction($guides, Trending::TYPE_GUIDE);
-            return $this->render('_guidelist', ['guides' => $guides]);
+            return $this->render('_guidelist', [
+                'guides' => $guides,
+                'marks' => $marks
+            ]);
         } else {
             $popular = Trending::getPopularGuide();
             return $this->render('guides', [
