@@ -20,7 +20,7 @@ class m240212_024346_create_table_log extends Migration
             'user_id' => $this->string(),
             'data' => $this->text(),
             'old_data' => $this->text(),
-            'created_at' => $this->date(),
+            'created_at' => $this->timestamp(),
         ]);
     }
 

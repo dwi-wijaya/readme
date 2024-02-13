@@ -17,7 +17,7 @@ class m240208_154103_create_table_trs_follow extends Migration
                 'idfollow' => $this->string(100)->notNull()->append('PRIMARY KEY'),
                 'author_id' => $this->string(100),
                 'user_id' => $this->string(54),
-                'created_at' => $this->date(),
+                'created_at' => $this->timestamp(),
             ],
             $tableOptions
         );

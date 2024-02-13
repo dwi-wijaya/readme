@@ -22,7 +22,7 @@ class m240212_021622_create_table_guides extends Migration
             'description' => $this->string(),
             'author' => $this->string(64),
             'level' => $this->string(),
-            'created_at' => $this->date(),
+            'created_at' => $this->timestamp(),
         ]);
     }
 

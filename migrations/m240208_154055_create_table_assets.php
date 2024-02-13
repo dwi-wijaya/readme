@@ -16,7 +16,7 @@ class m240208_154055_create_table_assets extends Migration
             [
                 'idassets' => $this->string(100)->notNull()->append('PRIMARY KEY'),
                 'asset_name' => $this->string(100),
-                'created_at' => $this->date(),
+                'created_at' => $this->timestamp(),
                 'iduser' => $this->string(64),
             ],
             $tableOptions

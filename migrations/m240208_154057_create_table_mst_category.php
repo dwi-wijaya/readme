@@ -20,8 +20,8 @@ class m240208_154057_create_table_mst_category extends Migration
                 'icon' => $this->string(100),
                 'color' => $this->string(100),
                 'description' => $this->string(450),
-                'created_at' => $this->date(),
-                'updated_at' => $this->date(),
+                'created_at' => $this->timestamp(),
+                'updated_at' => $this->timestamp(),
             ],
             $tableOptions
         );

@@ -17,7 +17,7 @@ class m240208_154101_create_table_trs_approval extends Migration
                 'idapproval' => $this->string(100),
                 'idarticle' => $this->string(100),
                 'status' => $this->string(100),
-                'created_at' => $this->date(),
+                'created_at' => $this->timestamp(),
                 'note' => $this->string(100),
                 'idreason' => $this->string(100),
             ],

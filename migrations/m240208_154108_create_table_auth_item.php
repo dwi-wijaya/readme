@@ -19,8 +19,8 @@ class m240208_154108_create_table_auth_item extends Migration
                 'description' => $this->text(),
                 'rule_name' => $this->string(64),
                 'data' => $this->binary(),
-                'created_at' => $this->date(),
-                'updated_at' => $this->date(),
+                'created_at' => $this->timestamp(),
+                'updated_at' => $this->timestamp(),
             ],
             $tableOptions
         );

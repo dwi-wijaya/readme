@@ -16,7 +16,7 @@ class m240212_021632_create_table_guide_list extends Migration
             'idguide_list' => $this->string()->notNull()->append('PRIMARY KEY'),
             'idarticle' => $this->string()->notNull(),
             'order' => $this->string(),
-            'created_at' => $this->date(),
+            'created_at' => $this->timestamp(),
         ]);
     }
 

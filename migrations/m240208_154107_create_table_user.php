@@ -23,9 +23,9 @@ class m240208_154107_create_table_user extends Migration
                 'bio' => $this->string(255),
                 'status' => $this->string(8),
                 'authKey' => $this->string(100),
-                'created_at' => $this->date(),
-                'updated_at' => $this->date(),
-                'lastlogin' => $this->date()
+                'created_at' => $this->timestamp(),
+                'updated_at' => $this->timestamp(),
+                'lastlogin' => $this->timestamp()
             ],
             $tableOptions
         );

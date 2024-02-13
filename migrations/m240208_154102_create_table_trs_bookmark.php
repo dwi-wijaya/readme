@@ -17,7 +17,7 @@ class m240208_154102_create_table_trs_bookmark extends Migration
                 'idbookmark' => $this->string(100)->notNull()->append('PRIMARY KEY'),
                 'idarticle' => $this->string(100),
                 'iduser' => $this->string(64),
-                'created_at' => $this->date(),
+                'created_at' => $this->timestamp(),
             ],
             $tableOptions
         );

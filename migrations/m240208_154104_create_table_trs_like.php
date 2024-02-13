@@ -18,7 +18,7 @@ class m240208_154104_create_table_trs_like extends Migration
                 'idarticle' => $this->string(100),
                 'is_like' => $this->boolean(),
                 'iduser' => $this->string(64),
-                'created_at' => $this->date(),
+                'created_at' => $this->timestamp(),
             ],
             $tableOptions
         );

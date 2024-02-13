@@ -19,7 +19,7 @@ class m240208_154105_create_table_trs_notification extends Migration
                 'recipient_id' => $this->string(64),
                 'type' => $this->string(100),
                 'idarticle' => $this->string(100),
-                'created_at' => $this->date(),
+                'created_at' => $this->timestamp(),
             ],
             $tableOptions
         );

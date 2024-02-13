@@ -16,8 +16,8 @@ class m240208_154056_create_table_auth_rule extends Migration
             [
                 'name' => $this->string(64)->notNull()->append('PRIMARY KEY'),
                 'data' => $this->binary(),
-                'created_at' => $this->date(),
-                'updated_at' => $this->date(),
+                'created_at' => $this->timestamp(),
+                'updated_at' => $this->timestamp(),
             ],
             $tableOptions
         );
