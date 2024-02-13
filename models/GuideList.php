@@ -28,7 +28,7 @@ class GuideList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idguide_list', 'idarticle'], 'required'],
+            [['idguide_list', 'idarticle','idguide'], 'required'],
             [['created_at'], 'safe'],
             [['idguide_list', 'idarticle', 'order'], 'string', 'max' => 255],
             [['idguide_list'], 'unique'],
@@ -46,5 +46,9 @@ class GuideList extends \yii\db\ActiveRecord
             'order' => 'Order',
             'created_at' => 'Created At',
         ];
+    }
+    public function getArticle()
+    {
+        return $this->hasOne(Article::className(), ['idarticle' => 'idarticle']);
     }
 }

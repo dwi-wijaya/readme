@@ -1,36 +1,43 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap");
 
 main>.container {
-    padding: 20px 15px 20px;
+  padding: 20px 15px 20px;
 }
+
 body {
   background-color: #fcfcfc;
   font-family: "Poppins", sans-serif;
 }
 
-main > .container {
+main>.container {
   padding: 90px 15px 20px;
 }
 
 .b-10 {
   border-radius: 10px !important;
 }
+
 .bg-main {
   background-color: #daa8ec !important;
 }
+
 .fw-500 {
   font-weight: 500;
 }
-.help-block{
+
+.help-block {
   color: #cd2b2b;
 }
-.has-error input{
+
+.has-error input {
   border: 1px solid #cd2b2b;
 }
+
 a {
   color: #212529;
   text-decoration: none;
 }
+
 a:hover {
   color: #212529;
   text-decoration: none;
@@ -43,32 +50,40 @@ a:hover {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+
 .btn-purple {
   background-color: #474af0;
   border-color: #474af0;
   border-radius: 10px;
   transition: all;
 }
+
 .btn-purple:hover {
   background-color: #5c5ff5;
   border-color: #474af0;
 }
+
 .d-flex {
   display: flex !important;
 }
+
 ::-webkit-scrollbar {
   width: 20px;
 }
+
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #d6dee1;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #d6dee1;
   border-radius: 20px;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #d6dee1;
   border-radius: 20px;
@@ -79,9 +94,11 @@ a:hover {
 .fw-700 {
   font-weight: 700 !important;
 }
+
 .fw-300 {
   font-weight: 300 !important;
 }
+
 .cat-icon {
   width: fit-content;
 
@@ -90,6 +107,7 @@ a:hover {
   border-radius: 4px;
   color: white;
 }
+
 .card-title {
   font-size: 1.25rem !important;
 }
@@ -98,26 +116,33 @@ a:hover {
   margin-top: 0.3rem;
   font-size: 0.75rem !important;
 }
+
 .cat-desc {
   font-size: 12px;
 }
+
 .category-card {
   height: 12rem;
 }
+
 .article-card {
   height: 23rem;
 }
+
 .thumbnail {
   height: 12rem;
   object-fit: cover;
 }
+
 .total-badge {
   padding: 10px;
   padding-bottom: 6px;
 }
+
 footer {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 .card-title {
   font-size: 1.25rem !important;
 }
@@ -128,4 +153,69 @@ footer {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+}
+
+.guide-img {
+  border-radius: 5px;
+  width: 4rem;
+  height: 4rem;
+}
+
+.card-guide:hover {
+  transform: scale(1.005);
+  box-shadow: 0 0 10px rgb(242, 242, 242);
+
+}
+
+.card-guide {
+  padding: 12px;
+  border-radius: 7px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-guide p {
+  font-size: .75rem;
+  line-height: 1rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2
+}
+
+.card-guide h6 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1
+}
+
+.detail-guide img {
+  width: 40%;
+  height: 40%;
+  max-width: 10rem;
+}
+
+.card-guide-list {
+  margin-bottom: .5rem;
+  padding: .5rem;
+  background: rgb(245 245 245 / 40%);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-guide-list:hover a {
+  color: white !important;
+}
+.card-guide-list:hover {
+  background-color: rgb(148 13 13 / 70%);
+  color: white !important;
+  transform: scale(1.005);
+  box-shadow: 0 0 10px rgb(242, 242, 242);
+}
+
+.title-icon {
+  color: rgb(148 13 13 / 70%) !important;
+  font-size: xx-large;
+  vertical-align: middle;
+  margin-right: 10px;
+  padding-top: 8px;
 }

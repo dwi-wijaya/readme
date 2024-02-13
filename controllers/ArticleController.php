@@ -201,10 +201,9 @@ class ArticleController extends LayoutController
         $bookmark = '';
         $like = '';
 
+        Trending::saveTransaction($model, Trending::TYPE_ARTICLE);
         if (Yii::$app->user->isGuest) {
-            Trending::saveTransaction($model);
         } else {
-            Trending::saveTransaction($model);
             $userId = User::me()->id;
 
             $bookmark = Bookmark::find()->where(['iduser' => $userId, 'idarticle' => $model->idarticle])->one();

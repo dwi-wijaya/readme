@@ -15,10 +15,11 @@ class m240208_154106_create_table_trs_trending extends Migration
             '{{%trs_trending}}',
             [
                 'idtrend' => $this->string(100)->notNull()->append('PRIMARY KEY'),
-                'idarticle' => $this->string(100),
+                'item_id' => $this->string(100),
+                'item_type' => $this->string(16),
                 'iduser' => $this->string(100),
-                'created_at' => $this->string(100),
-                'updated_at' => $this->string(100),
+                'created_at' => $this->date(),
+                'updated_at' => $this->date(),
                 'liked' => $this->string(100),
             ],
             $tableOptions

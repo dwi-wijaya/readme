@@ -93,9 +93,9 @@ class Article extends \yii\db\ActiveRecord
     public static function topArticle()
     {
         $top = (new Query())
-            ->select(['count(*) as total', 'idarticle'])
+            ->select(['count(*) as total', 'item_id'])
             ->from(Trending::tableName())
-            ->groupBy('idarticle');
+            ->groupBy('item_id');
         return $top;
     }
 
@@ -106,7 +106,7 @@ class Article extends \yii\db\ActiveRecord
         $query = (new Query())
             ->select(['a.*', 't.total'])
             ->from(['a' => self::tableName()])
-            ->innerJoin(['t' => $viewed], 'a.idarticle=t.idarticle')
+            ->innerJoin(['t' => $viewed], 'a.idarticle=t.item_id')
             ->orderBy(['total' => SORT_DESC])->limit(6)->all();
 
         return $query;
@@ -169,7 +169,7 @@ class Article extends \yii\db\ActiveRecord
                 $mSave->status = 0;
                 $mSave->date_reject = date('Y-m-d');
                 $mSave->user_reject =  User::me()->id;
-                $mSave->isapproved = Utils::REJECT;
+                $mSave->isapproved = Utils::FLAG_REJECT;
                 // $mSave->isgangguan = (string) $mSave->isgangguan;
                 // $mSave->iduser = User::me()->id;
                 $mSave->save();
@@ -325,5 +325,13 @@ class Article extends \yii\db\ActiveRecord
             ->one();
 
         return $query;
+    }
+    public static function findArticlebyAuthor($authorId, $isMap){
+        $query = Article::find()->where(['author_id' => $authorId])->orderBy(['created_at' => SORT_DESC])->all();
+        if($isMap){
+            return ArrayHelper::map($query,'idarticle','title');
+        }
+        return $query;
+
     }
 }

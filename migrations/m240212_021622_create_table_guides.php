@@ -15,7 +15,10 @@ class m240212_021622_create_table_guides extends Migration
         $this->createTable('{{%guides}}', [
             'idguide' => $this->string()->notNull()->append('PRIMARY KEY'),
             'title' => $this->string()->notNull(),
+            'slug' => $this->string(),
             'thumbnail' => $this->string(),
+            'excerpt' => $this->string(),
+            'pretext' => $this->string(),
             'description' => $this->string(),
             'author' => $this->string(64),
             'level' => $this->string(),

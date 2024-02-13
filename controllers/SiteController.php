@@ -15,14 +15,17 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Follow;
+use app\models\Guides;
 use app\models\mstCategory;
 use app\models\mstMenu;
 use app\models\Notification;
 use app\models\OtpCodes;
 use app\models\ResetPasswordTokens;
+use app\models\Trending;
 use app\models\User;
 use app\models\Users;
 use PharIo\Manifest\Author;
+use yidas\widgets\Pagination;
 use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
@@ -78,7 +81,6 @@ class SiteController extends LayoutController
      */
     public function actionIndex()
     {
-
         $model = new Article();
         $model->load(Utils::req()->get());
         $mviewed = Article::getMostViewed();
@@ -96,6 +98,25 @@ class SiteController extends LayoutController
         ]);
     }
 
+    public function actionGuide($slug = null)
+    {
+        $model = new Guides();
+
+        $guides  = Guides::find()->with('list')->andFilterWhere(['slug' => $slug]);
+        $data = Utils::createPagination($guides);
+        if ($slug) {
+            $guides = $guides->one();
+            Trending::saveTransaction($guides, Trending::TYPE_GUIDE);
+            return $this->render('_guidelist', ['guides' => $guides]);
+        } else {
+            $popular = Trending::getPopularGuide();
+            return $this->render('guides', [
+                'guides' => $data['record'],
+                'popular' => $popular,
+                'pagination' => $data['pagination'],
+            ]);
+        }
+    }
     public function actionFollowing()
     {
         $model = new Article();
@@ -203,16 +224,16 @@ class SiteController extends LayoutController
         $otp = mt_rand(100000, 999999); // Generate random 6-digit OTP
 
         // Save OTP to database
-        $otpCode = OtpCodes::saveOtpCode($userId,$otp);
-        $emailSent = Utils::sendEmailOtp($userEmail,$otp);
-        
+        $otpCode = OtpCodes::saveOtpCode($userId, $otp);
+        $emailSent = Utils::sendEmailOtp($userEmail, $otp);
+
 
         // Kirim OTP ke pengguna, misalnya melalui email 
         // Implementasi pengiriman OTP ke pengguna disini
 
         // Tampilkan pesan sukses
         Utils::flashSuccess('OTP has been resent to your email or phone number.');
-        
+
         return $this->redirect(['confirm-otp', 'userId' => $userId, 'userEmail' => $userEmail]);
     }
     public function actionConfirmOtp($userId, $userEmail)
@@ -290,7 +311,7 @@ class SiteController extends LayoutController
             $otpRecord = OtpCodes::saveOtpCode($model->username, $otpCode);
 
             // Send OTP code to user's email
-            $emailSent = Utils::sendEmailOtp($model->email,$otpCode);
+            $emailSent = Utils::sendEmailOtp($model->email, $otpCode);
 
             if ($emailSent) {
                 Utils::flashFailed('Email successfully sent. Please check your inbox.');
