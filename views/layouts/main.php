@@ -50,7 +50,7 @@ $profileImg = Yii::$app->user->isGuest ? Utils::baseUploadsStock('user.png') : U
 
     <!-- Import Font awesome -->
     <style>
-        
+
 
 
 
@@ -60,25 +60,30 @@ $profileImg = Yii::$app->user->isGuest ? Utils::baseUploadsStock('user.png') : U
     <?php
     $profile = User::getProfile();
     $menu = mstMenu::getNativenavbar();
-    $menu = Yii::$app->user->isGuest ? $menu['guest'] : $menu['guest'];
     ?>
-    <nav class="border-bottom fixed-top navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="guest-nav fixed-top navbar navbar-expand-lg">
         <div class="container">
 
-            <a class="navbar-brand" href="#"><b>Readme</b></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+
+            <a class="navbar-brand text-white" href="<?= Url::home() ?>">
+                <i style="font-size: 20px;color: #565656;" class="fa-regular fa-newspaper text-white"></i>
+                <b>Readme</b>
+            </a>
+            <button class="navbar-toggler text-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav mr-auto" style="gap: 5px;">
                     <?php foreach ($menu as $m) : ?>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="<?= Url::to([$m['route']]) ?>"><?= $m['name']; ?></a>
+                        <li class="nav-item active ">
+                            <a class="nav-link btn-orange text-white" href="<?= Url::to([$m['route']]) ?>">
+                                <span class="fa fa-<?= $m['icon'] ?>"></span> &nbsp; <?= $m['name']; ?>
+                            </a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
-                <a class="profile-navbar" href="<?= Url::to([$profile['route']]); ?>"><img src="<?= $profile['img']; ?>" alt=""></a>
+                <a class="btn btn-sm btn-sign-in text-reset" href="<?= Url::to([$profile['route']]); ?>">Sign-in / Sign-up</a>
             </div>
         </div>
     </nav>
@@ -93,8 +98,12 @@ $profileImg = Yii::$app->user->isGuest ? Utils::baseUploadsStock('user.png') : U
                 <div class="main-content float-left text-light w-100 w50 mt-3">
                     <h1 class="fw-700">Readme.</h1>
                     <h5 class="mb-3">Learning code by the easy way</h5>
-                    <a href="<?= Url::to(['login']); ?>" class="text-light btn btn-outline-primary"><li class="fa fa-sign-in"></li>&nbsp; Sign-in / Sign-up</a>
-                    <a href="<?= Url::to(['login']); ?>" class="text-light btn btn-outline-success"><li class="fa fa-search"></li>&nbsp; Explore</a>
+                    <a href="<?= Url::to(['login']); ?>" class="text-reset text-white btn btn-sign-in">
+                        <li class="fa fa-sign-in"></li>&nbsp; Sign-in / Sign-up
+                    </a>
+                    <a href="<?= Url::to(['explore']); ?>" class="text-light btn btn-dark-blue ">
+                        <li class="fa fa-search"></li>&nbsp; Explore
+                    </a>
                 </div>
             </div>
         </div>

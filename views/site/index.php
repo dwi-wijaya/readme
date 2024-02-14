@@ -18,13 +18,12 @@ $query_string = (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : nu
 </style>
 <div class="site-index">
     <?php if ($query_string == strpos($query_string, 'page=1') || $query_string == NULL) : ?>
-        <div class="row mt-5">
-            <div class="col-1">
-                <hr>
-            </div>
-            <div class="col">
-                <h5>Most Viewed Article</h5>
-            </div>
+        <div class="my-2">
+            <h5 class="mb-0">
+                <i class="fa fa-fire title-icon"></i>&nbsp;
+                Uncover Our Trending Articles
+            </h5>
+            <small>Dive into a Collection of Articles Trending Among Our Readers</small>
         </div>
         <div class="most-viewed mt-4">
             <div class="row">
@@ -39,13 +38,12 @@ $query_string = (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : nu
         </div>
     <?php endif ?>
 
-    <div class="row mt-5">
-        <div class="col-1">
-            <hr>
-        </div>
-        <div class="col">
-            <h5>Latest Article</h5>
-        </div>
+    <div class="my-2 mt-5">
+        <h5 class="mb-0">
+            <i class="fa fa-clock  title-icon"></i>&nbsp;
+            Discover Our Latest Insights
+        </h5>
+        <small>Stay Updated with Our Newest Articles Freshly Published</small>
     </div>
     <div class="most-viewed mt-4">
         <div class="row">

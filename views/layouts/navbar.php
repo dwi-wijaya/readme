@@ -65,7 +65,7 @@ use yii\helpers\Url;
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="d-flex gap-3" href="<?= Url::base(true) ?>/site">
-                <i style="    font-size: 30px;color: #565656;" class="fa-regular fa-newspaper"></i>
+                <i style="font-size: 30px;color: #565656;" class="fa-regular fa-newspaper"></i>
                 <h3 class="fw-700 m-0  nav-brand ml-1">Readme</h3>
             </a>
         </li>

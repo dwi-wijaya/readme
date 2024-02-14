@@ -32,18 +32,17 @@ $this->title = "Explore";
     }
 </style>
 <div class="site-about">
-    <div class="row mt-5">
-        <div class="col-1">
-            <hr>
-        </div>
-        <div class="col">
-            <h5>Category</h5>
-        </div>
+    <div class="my-2">
+        <h5 class="mb-0">
+            <i class="fa fa-layer-group title-icon"></i>&nbsp;
+            Navigate Through Our Article Categories
+        </h5>
+        <small>Find Articles Organized by Topic for Easy Browsing</small>
     </div>
-    <div class="category">
+    <div class="category my-2">
         <div class="row">
             <?php foreach ($cat as $c) : ?>
-                <div class="col-12 col-md-4 col-lg-3 mt-4">
+                <div class="col-12 col-md-4 col-lg-3 p-2">
                     <a href="<?= Url::to(['site/category', 'idcat' => $c['idcat']]); ?>">
                         <div class="category-card card card-body b-10">
                             <div class="category-title">
@@ -57,12 +56,13 @@ $this->title = "Explore";
             <?php endforeach ?>
         </div>
     </div>
-    <div class="row mt-5">
-        <div class="col-1">
-            <hr>
-        </div>
+    <div class="row mt-5 mb-2">
         <div class="col">
-            <h5>Explore</h5>
+            <h5 class="mb-0">
+                <i class="fa fa-binoculars  title-icon"></i>&nbsp;
+                Embark on a Journey of Discovery
+            </h5>
+            <small>Explore a Wide Range of Topics in Our Vast Article Collection</small>
         </div>
         <div class="col">
             <?php $form = ActiveForm::begin([

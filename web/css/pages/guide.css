@@ -1,0 +1,58 @@
+.guide-img {
+    border-radius: 5px;
+    width: 4rem;
+    height: 4rem;
+}
+
+.card-guide:hover {
+    transform: scale(1.005);
+    box-shadow: 0 0 10px rgb(242, 242, 242);
+
+}
+
+.card-guide {
+    padding: 12px;
+    border-radius: 10px !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-guide p {
+    font-size: .75rem;
+    line-height: 1rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2
+}
+
+.card-guide h6 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1
+}
+
+.detail-guide img {
+    width: 40%;
+    height: 40%;
+    max-width: 10rem;
+}
+
+.card-guide-list {
+    margin-bottom: .5rem;
+    padding: .5rem;
+    background: rgb(245 245 245 / 40%);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-guide-list:hover a {
+    color: white !important;
+}
+
+.card-guide-list:hover {
+    background-color: rgb(203 80 80);
+    color: white !important;
+    transform: scale(1.005);
+    box-shadow: 0 0 10px rgb(242, 242, 242);
+}
+
