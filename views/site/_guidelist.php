@@ -7,6 +7,7 @@ use richardfan\widget\JSRegister;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+$this->registerCssFile('@web/css/pages/guide.css');
 
 $this->title = 'Readme';
 $checklistRoute = Yii::$app->user->isGuest ? Url::to(['site/login']) : '#';
