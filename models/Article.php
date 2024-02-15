@@ -127,7 +127,7 @@ class Article extends \yii\db\ActiveRecord
         $query = (new Query())
             ->select(['a.*', 't.total'])
             ->from(['a' => self::tableName()])
-            ->innerJoin(['t' => $viewed], 'a.idarticle=t.idarticle')
+            ->innerJoin(['t' => $viewed], 'a.idarticle=t.item_id')
             ->innerJoin(['au' => Users::tableName()], 'au.username=a.author_id')
             ->where(['author_id' => $id])
             ->orderBy(['total' => SORT_DESC])
