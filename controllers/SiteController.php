@@ -249,6 +249,7 @@ class SiteController extends LayoutController
     }
     public function actionResendOtp($userId, $userEmail)
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
         // Temukan pengguna berdasarkan ID
         $user = User::findOne($userId);
 
@@ -270,9 +271,9 @@ class SiteController extends LayoutController
         // Implementasi pengiriman OTP ke pengguna disini
 
         // Tampilkan pesan sukses
-        Utils::flashSuccess('OTP has been resent to your email or phone number.');
+        Utils::flashSuccess('OTP has been resent to your email.');
 
-        return $this->redirect(['confirm-otp', 'userId' => $userId, 'userEmail' => $userEmail]);
+        return ['success' => true];
     }
     public function actionConfirmOtp($userId, $userEmail)
     {
@@ -352,7 +353,7 @@ class SiteController extends LayoutController
             $emailSent = Utils::sendEmailOtp($model->email, $otpCode);
 
             if ($emailSent) {
-                Utils::flashFailed('Email successfully sent. Please check your inbox.');
+                Utils::flashSuccess('Email successfully sent. Please check your inbox.');
                 // Redirect to OTP confirmation page
                 return $this->redirect(['confirm-otp', 'userId' => $model->username, 'userEmail' => $model->email]);
             } else {

@@ -35,7 +35,7 @@ $this->title = 'Login';
             <div class="form-group">
                 <?= Html::submitButton('<i class="fa-regular fa-envelope"></i> &nbsp;Submit', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
             </div>
-            <a class="text-center w-100" href="<?= Url::to(['site/login',]); ?>">
+            <a class="text-center w-100 text-muted" href="<?= Url::to(['site/login',]); ?>">
                 <li class="fa fa-chevron-left"></li> &nbsp;Back to Sign-in?
             </a>
 
