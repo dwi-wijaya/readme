@@ -14,10 +14,12 @@ use yii\helpers\Url;
 FontAwesomeAsset::register($this);
 AdminLteAsset::register($this);
 $this->registerCssFile('@web/css/lte.css');
+$this->registerCssFile('@web/css/utils.css');
 // AppAsset::register($this);
 $assetDir = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
 $publishedRes = Yii::$app->assetManager->publish('@vendor/hail812/yii2-adminlte3/src/web/js');
 $this->registerJsFile($publishedRes[1] . '/control_sidebar.js', ['depends' => '\hail812\adminlte3\assets\AdminLteAsset']);
+$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/newspaper.svg')]);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

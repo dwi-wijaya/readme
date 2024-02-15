@@ -24,7 +24,7 @@ $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
-$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/newspaper.svg')]);
 
 $profileUrl = Yii::$app->user->isGuest ? ['site/login'] : ['users/account', 'id' => User::me()->id];
 $profileImg = Yii::$app->user->isGuest ? Utils::baseUploadsStock('user.png') : Utils::baseUploadsStock('user.png');
@@ -77,7 +77,7 @@ $profileImg = Yii::$app->user->isGuest ? Utils::baseUploadsStock('user.png') : U
                 <ul class="navbar-nav mr-auto" style="gap: 5px;">
                     <?php foreach ($menu as $m) : ?>
                         <li class="nav-item active ">
-                            <a class="nav-link btn-orange text-white" href="<?= Url::to([$m['route']]) ?>">
+                            <a class="nav-link btn-orange text-white p-2" href="<?= Url::to([$m['route']]) ?>">
                                 <span class="fa fa-<?= $m['icon'] ?>"></span> &nbsp; <?= $m['name']; ?>
                             </a>
                         </li>
