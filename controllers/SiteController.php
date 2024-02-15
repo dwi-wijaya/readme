@@ -277,6 +277,9 @@ class SiteController extends LayoutController
     }
     public function actionConfirmOtp($userId, $userEmail)
     {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $this->layout = '_blank.php';
         $model = new AuthForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -309,6 +312,9 @@ class SiteController extends LayoutController
     public function actionResetPassword($token)
     {
         $this->layout = '_blank.php';
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $tokenModel = ResetPasswordTokens::findByToken($token);
 
         if (!$tokenModel || $tokenModel->isExpired() || $tokenModel->isUsed()) {
@@ -341,6 +347,9 @@ class SiteController extends LayoutController
     public function actionForgotPassword()
     {
         $this->layout = '_blank.php';
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $model = new AuthForm();
         $model->scenario = AuthForm::SCENARIO_FORGOT_PASSWORD;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
