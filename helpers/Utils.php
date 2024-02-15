@@ -303,11 +303,14 @@ class Utils
     }
     public static function sendEmailOtp($to, $otpCode)
     {
-        Yii::$app->mailer->compose()
+        Yii::$app->mailer->compose('_verificationCode', [
+                'otpCode' => $otpCode,
+                'content' => 'This is a test email.',
+            ])
             ->setTo($to)
             ->setFrom('dwiwijayanto1198@gmail.com')
             ->setSubject('Password Reset OTP')
-            ->setTextBody('Your OTP code: ' . $otpCode)
+            ->setTextBody('Your Readme email verification code is: ' . $otpCode)
             ->send();
         return true;
     }
