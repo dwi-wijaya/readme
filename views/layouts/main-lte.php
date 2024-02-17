@@ -13,6 +13,7 @@ use yii\helpers\Url;
 \hail812\adminlte3\assets\AdminLteAsset::register($this);
 FontAwesomeAsset::register($this);
 AdminLteAsset::register($this);
+$this->registerCssFile('@web/css/site.css');
 $this->registerCssFile('@web/css/lte.css');
 $this->registerCssFile('@web/css/utils.css');
 // AppAsset::register($this);

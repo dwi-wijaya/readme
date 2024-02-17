@@ -14,14 +14,14 @@ use Yii;
  * @property int $status
  * @property string|null $created_at
  */
-class ResetPasswordTokens extends \yii\db\ActiveRecord
+class SecurityToken extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'reset_password_tokens';
+        return 'security_tokens';
     }
 
     /**
@@ -64,7 +64,7 @@ class ResetPasswordTokens extends \yii\db\ActiveRecord
 
     public static function createToken($userId, $resetPasswordToken)
     {
-        $tokenModel = new ResetPasswordTokens();
+        $tokenModel = new SecurityToken();
         $tokenModel->user_id = $userId;
         $tokenModel->token = $resetPasswordToken;
         $tokenModel->expires_at = date('Y-m-d H:i:s', strtotime('+1 hour')); // Set expiration time, misalnya 1 jam dari sekarang

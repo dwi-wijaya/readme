@@ -87,12 +87,12 @@ $this->title = $model->username;
         </div>
         <div class="col-8">
             <small class="m-0 text-muted">@<?= $model->username; ?></small>
-            <div class="profile">
+            <div class="profile justify-content-between">
                 <h1 class="fw-700"><?= $model->first_name . ' ' . $model->last_name; ?></h1>
                 <?php if (User::me()->username === $model->username) : ?>
-                    <div class="group-btn">
-                        <a id="" class="b-10 btn btn-secondary "><i class="fa-solid fa-pen"></i> &nbsp; Update</a>
-                        <a href="<?= Url::to(['site/setting']); ?>" id="" class="b-10 btn btn-primary"><i class="fa-solid fa-gear"></i></a>
+                    <div class="group-btn float-right">
+                        <a href="<?= Url::to(['profile']) ?>" class="b-10 btn btn-secondary "><i class="fa-solid fa-pen"></i></a>
+                        <a href="<?= Url::to(['settings']); ?>" id="" class="b-10 btn btn-primary"><i class="fa-solid fa-gear"></i></a>
                     </div>
                 <?php endif ?>
                 <?php if ($model->role == Utils::ROLE_AUTHOR) : ?>
@@ -108,13 +108,13 @@ $this->title = $model->username;
     </div>
     <hr>
     <?php if ($model->role->item_name == Utils::ROLE_AUTHOR) : ?>
-        <?= $this->render('_account_author',[
+        <?= $this->render('_account_author', [
             'articlemodel' => $articlemodel,
             'top' => $top,
             'latest' => $latest,
         ]) ?>
     <?php elseif ($model->role->item_name == Utils::ROLE_SUBCRIBER) : ?>
-        <?= $this->render('_account_subscriber',[
+        <?= $this->render('_account_subscriber', [
             'liked' => $liked,
             'bookmark' => $bookmark
         ]) ?>

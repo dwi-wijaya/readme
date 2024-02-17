@@ -8,7 +8,7 @@ use yii\bootstrap4\Breadcrumbs;
     <div class="content-header">
         <div class="container-fluid ">
             <div class="row mb-2">
-                
+
                 <div class="col-sm-6">
                     <?php
                     echo Breadcrumbs::widget([
@@ -26,6 +26,7 @@ use yii\bootstrap4\Breadcrumbs;
 
     <!-- Main content -->
     <div class="content ">
+        <?= \dominus77\sweetalert2\Alert::widget(['useSessionFlash' => true]); ?>
         <?= $content ?><!-- /.container-fluid -->
     </div>
     <!-- /.content -->

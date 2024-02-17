@@ -25,16 +25,17 @@ $this->title = 'Login';
             <?php $form = ActiveForm::begin([
                 'id' => 'login-form',
             ]); ?>
-            <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'New Password'])->label(false) ?>
+            <?= $form->field($model, 'newPassword')->passwordInput(['placeholder' => 'New Password'])->label(false) ?>
             <?= $form->field($model, 'confirmPassword')->passwordInput(['placeholder' => 'Repeat Password'])->label(false) ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Reset', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
             </div>
-            <a class="text-center w-100" href="<?= Url::to(['site/forgot-password',]); ?>">
-                <li class="fa fa-chevron-left"></li> &nbsp;Back to forget password?
-            </a>
-
+            <?php if (!$isAuthorized) : ?>
+                <a class="text-center w-100" href="<?= Url::to(['site/forgot-password',]); ?>">
+                    <li class="fa fa-chevron-left"></li> &nbsp;Back to forget password?
+                </a>
+            <?php endif ?>
             <?php ActiveForm::end(); ?>
         </div>
     </div>

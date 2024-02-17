@@ -58,15 +58,18 @@ use yii\helpers\Url;
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link nav-toogle" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            <a class="nav-link nav-toogle" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars text-main"></i></a>
         </li>
     </ul>
 
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="d-flex gap-3" href="<?= Url::base(true) ?>/site">
-                <i style="font-size: 30px;color: #565656;" class="fa-regular fa-newspaper"></i>
-                <h3 class="fw-700 m-0  nav-brand ml-1">Readme</h3>
+
+                <h4 class="fw-700 m-0  nav-brand ml-1 text-main">
+                    <i class="fa-regular fa-newspaper text-main"></i>
+                    Readme
+                </h4>
             </a>
         </li>
     </ul>
@@ -74,31 +77,31 @@ use yii\helpers\Url;
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
 
-        
+
         <li class="nav-item">
-            <?= Html::a('<i class="fas fa-sign-out-alt"></i>', ['/site/logout'], ['data-method' => 'post', 'class' => 'nav-link']) ?>
+            <?= Html::a('<i class="fas fa-sign-out-alt text-main"></i>', ['/site/logout'], ['data-method' => 'post', 'class' => 'nav-link']) ?>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                <i class="fas fa-expand-arrows-alt"></i>
+                <i class="fas fa-expand-arrows-alt text-main"></i>
             </a>
         </li>
         <?php if (Url::current() == '/article/create' || preg_match('/update\?id=\d+/', Url::current())) : ?>
             <li class="nav-item">
                 <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                    <i class="fas fa-th-large"></i>
+                    <i class="fas fa-th-large text-main"></i>
                 </a>
             </li>
         <?php endif ?>
         <li class="nav-item">
             <div class="btn-group d-none d-lg-block d-md-block" role="group">
-                <button id="btnGroupDrop1" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button id="btnGroupDrop1" type="button" class="btn btn-main btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?= User::me()->first_name . ' / ' . Utils::getLabelRolename() ?>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                     <?= Html::a(User::me()->first_name . ' ' . User::me()->last_name, Url::to(['users/account', 'id' => User::me()->username]), ['class' => 'nav-link nav-user']) ?>
                     <div class="dropdown-divider"></div>
-                    <?= Html::a('<i class="fas fa-sign-out-alt"></i> Logout', ['/site/logout'], ['data' => ['confirm' => 'Apakah anda yakin ingin keluar ?', 'method' => 'post'], 'class' => 'nav-link nav-user']) ?>
+                    <?= Html::a('<i class="fas fa-sign-out-alt"></i> Logout', ['/site/logout'], ['data' => ['confirm' => 'Are you sure you want to sign out ?', 'method' => 'post'], 'class' => 'nav-link nav-user']) ?>
                 </div>
             </div>
         </li>

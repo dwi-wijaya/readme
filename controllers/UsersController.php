@@ -8,6 +8,7 @@ use app\models\AuthAssignment;
 use app\models\Bookmark;
 use app\models\Follow;
 use app\models\Like;
+use app\models\SecurityToken;
 use app\models\Trending;
 use app\models\User;
 use app\models\Users;
@@ -65,7 +66,7 @@ class UsersController extends LayoutController
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'model'=> $model
+            'model' => $model
         ]);
     }
     public function actionEditor()
@@ -87,7 +88,7 @@ class UsersController extends LayoutController
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'model'=> $model
+            'model' => $model
         ]);
     }
     public function actionSubscriber()
@@ -109,10 +110,10 @@ class UsersController extends LayoutController
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'model'=> $model
+            'model' => $model
         ]);
     }
-    
+
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
@@ -147,22 +148,131 @@ class UsersController extends LayoutController
             'model' => $this->findModel($id),
         ]);
     }
-    
+    public function actionSettings()
+    {
+        return $this->render('settings');
+    }
+    public function actionForgotEmail()
+    {
+        $me = User::me();
+        $model = $this->findModel($me->username);
+        $model->scenario = Users::SCNEARIO_RESET_EMAIL;
+        if ($model->load(Yii::$app->request->post())) {
+            $resetEmailToken = Yii::$app->security->generateRandomString(32);
+            // Save token to database
+            $tokenModel = SecurityToken::createToken($model->username, $resetEmailToken);
+
+            $sendMail = Yii::$app->mailer
+                ->compose('_confirmEmail', [
+                    'username' => $model->username,
+                    'token' => $tokenModel->token
+                ])
+                ->setTo($model->newEmail)
+                ->setFrom('dwiwijayanto1198@gmail.com')
+                ->setSubject('Reset your email address')
+                ->send();
+
+            if ($sendMail) {
+                Utils::flashSuccessSweetAlert('Please check your new email for further instructions.');
+            } else {
+                Utils::flashFailedSweetAlert('Failed to send email. Please try again later.');
+            }
+
+            return $this->refresh();
+        }
+        return $this->render('setting/forgot-email', [
+            'model' => $model,
+        ]);
+    }
+    public function actionForgotPassword()
+    {
+        $me = User::me();
+        $model = $this->findModel($me->username);
+        if ($this->request->isPost) {
+            $resetPasswordToken = Yii::$app->security->generateRandomString(32);
+
+            // Save token to database
+            $tokenModel = SecurityToken::createToken($model->username, $resetPasswordToken);
+            $sendMail = Yii::$app->mailer
+                ->compose('_forgotPassword', [
+                    'username' => $model->username,
+                    'token' => $tokenModel->token
+                ])
+                ->setTo($model->email)
+                ->setFrom('dwiwijayanto1198@gmail.com')
+                ->setSubject('Reset your password')
+                ->send();
+
+            if ($sendMail) {
+                Utils::flashSuccessSweetAlert('Please check your email for further instructions.');
+            } else {
+                Utils::flashFailedSweetAlert('Failed to send email. Please try again later.');
+            }
+
+            return $this->refresh();
+        }
+        return $this->render('setting/forgot-password', [
+            'model' => $model,
+        ]);
+    }
+    public function actionResetPassword()
+    {
+        $me = User::me();
+        $model = $this->findModel($me->username);
+        $model->password =  Yii::$app->security->generatePasswordHash(md5('admin'));
+        // if($model->save()){
+        //     echo '<pre>';print_r('cu');die;
+        // }
+        $model->scenario = Users::SCENARIO_RESET_PASSWORD;
+        if ($this->request->isPost) {
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                // $model->password = Yii::$app->security->generatePasswordHash(md5($model->newPassword));
+                if ($model->save()) {
+                    Utils::flashSuccessSweetAlert('Password has been reset successfully.');
+                    return  $this->refresh();
+                }
+            }
+        }
+
+        return $this->render('setting/reset-password', [
+            'model' => $model,
+        ]);
+    }
+
+
+    public function actionProfile()
+    {
+        $me = User::me();
+        $model = $this->findModel($me->username);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->save()) {
+                    Utils::flashSuccessSweetAlert('Profile has been saved');
+                } else {
+                    Utils::flashFailedSweetAlert('Profile has not been saved');
+                }
+                return $this->refresh();
+            }
+        }
+        return $this->render('setting/update-profile', [
+            'model' => $model,
+        ]);
+    }
     public function actionAccount($id, $filter = null)
     {
         $model = new Article();
         $model->load(Utils::req()->get());
-        $latest_article = Article::search($model,$id);
+        $latest_article = Article::search($model, $id);
         $top_article = Article::getMostviewedbyuser($id);
         $profilestat = Users::userProfile($id);
         $user =  Users::find()->with('role')->where(['username' => $id])->one();
-       
+
         $bookmarked = Article::find()
-        ->innerJoin(['b' => Bookmark::find()->where(['iduser' => User::me()->id])],'b.idarticle=article.idarticle')
-        ->orderBy(['b.created_at' => SORT_DESC])->all();
+            ->innerJoin(['b' => Bookmark::find()->where(['iduser' => User::me()->id])], 'b.idarticle=article.idarticle')
+            ->orderBy(['b.created_at' => SORT_DESC])->all();
         $liked = Article::find()
-        ->innerJoin(['b' => Like::find()->where(['iduser' => User::me()->id,'is_like' => true])],'b.idarticle=article.idarticle')
-        ->orderBy(['b.created_at' => SORT_DESC])->all();
+            ->innerJoin(['b' => Like::find()->where(['iduser' => User::me()->id, 'is_like' => true])], 'b.idarticle=article.idarticle')
+            ->orderBy(['b.created_at' => SORT_DESC])->all();
 
         return $this->render('account', [
             'articlemodel' => $model,
@@ -231,7 +341,8 @@ class UsersController extends LayoutController
         return $this->redirect(['index']);
     }
 
-    public function actionFollow(){
+    public function actionFollow()
+    {
         $id  = Yii::$app->request->post('id');
         $userId = User::me()->id;
 

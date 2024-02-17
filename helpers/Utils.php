@@ -15,6 +15,7 @@ use yii\bootstrap4\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
+use dominus77\sweetalert2;
 
 class Utils
 {
@@ -138,6 +139,63 @@ class Utils
     {
         return Yii::$app->session->setFlash(Alert::TYPE_INFO, $description);
     }
+
+    public static function flashSuccessSweetAlert($description = 'Berhasil.')
+    {
+        Yii::$app->getSession()->setFlash('success', [
+            'title' => 'Success!',
+            'text' => $description,
+            'timer' => 10000,
+            'timerProgressBar' => true,
+            'toast' => true,
+            'position' => 'top-end',
+            'showConfirmButton' => false,
+            'showCloseButton' => true,
+        ]);
+    }
+
+    public static function flashWarningSweetAlert($description = 'Warning.')
+    {
+        Yii::$app->getSession()->setFlash('warning', [
+            'title' => 'Warning!',
+            'text' => $description,
+            'timer' => 10000,
+            'timerProgressBar' => true,
+            'toast' => true,
+            'position' => 'top-end',
+            'showConfirmButton' => false,
+            'showCloseButton' => true,
+        ]);
+    }
+
+    public static function flashFailedSweetAlert($description = 'Error.')
+    {
+        Yii::$app->getSession()->setFlash('error', [
+            'title' => 'Error!',
+            'text' => $description,
+            'timer' => 10000,
+            'timerProgressBar' => true,
+            'toast' => true,
+            'position' => 'top-end',
+            'showConfirmButton' => false,
+            'showCloseButton' => true,
+        ]);
+    }
+
+    public static function flashInfoSweetAlert($description = 'Info.')
+    {
+        Yii::$app->getSession()->setFlash('info', [
+            'title' => 'Info!',
+            'text' => $description,
+            'timer' => 10000,
+            'timerProgressBar' => true,
+            'toast' => true,
+            'position' => 'top-end',
+            'showConfirmButton' => false,
+            'showCloseButton' => true,
+        ]);
+    }
+
     public static function getStatus($stat)
     {
         $status = [
@@ -304,14 +362,27 @@ class Utils
     public static function sendEmailOtp($to, $otpCode)
     {
         Yii::$app->mailer->compose('_verificationCode', [
-                'otpCode' => $otpCode,
-                'content' => 'This is a test email.',
-            ])
+            'otpCode' => $otpCode,
+            'content' => 'This is a test email.',
+        ])
             ->setTo($to)
             ->setFrom('dwiwijayanto1198@gmail.com')
             ->setSubject('Password Reset OTP')
             ->setTextBody('Your Readme email verification code is: ' . $otpCode)
             ->send();
         return true;
+    }
+    public static function  sensorEmail($email) {
+        $parts = explode('@', $email);
+        $username = $parts[0];
+        $domain = $parts[1];
+        
+        $firstCharacter = substr($username, 0, 1);
+        $lastPart = substr($username, -1);
+        $stars = str_repeat('*', strlen($username) - 2);
+        
+        $sensoredUsername = $firstCharacter . $stars . $lastPart;
+        
+        return $sensoredUsername . '@' . $domain;
     }
 }

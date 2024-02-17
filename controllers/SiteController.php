@@ -20,7 +20,7 @@ use app\models\mstCategory;
 use app\models\mstMenu;
 use app\models\Notification;
 use app\models\OtpCodes;
-use app\models\ResetPasswordTokens;
+use app\models\SecurityToken;
 use app\models\Trending;
 use app\models\User;
 use app\models\UserProgress;
@@ -219,10 +219,7 @@ class SiteController extends LayoutController
         ]);
     }
 
-    public function actionSetting()
-    {
-        return $this->render('setting');
-    }
+
 
     /**
      * Login action.
@@ -294,7 +291,7 @@ class SiteController extends LayoutController
                 $resetPasswordToken = Yii::$app->security->generateRandomString(32);
 
                 // Save token to database
-                $tokenModel = ResetPasswordTokens::createToken($userId, $resetPasswordToken);
+                $tokenModel = SecurityToken::createToken($userId, $resetPasswordToken);
 
                 // Redirect user to reset password page with token as parameter
                 return $this->redirect(['reset-password', 'token' => $resetPasswordToken]);
@@ -309,32 +306,47 @@ class SiteController extends LayoutController
             'userEmail' => $userEmail
         ]);
     }
-    public function actionResetPassword($token)
-    {
+    public function actionVerifyEmail($token, $isAuthorized = false){
         $this->layout = '_blank.php';
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-        $tokenModel = ResetPasswordTokens::findByToken($token);
+
+        $tokenModel = SecurityToken::findByToken($token);
 
         if (!$tokenModel || $tokenModel->isExpired() || $tokenModel->isUsed()) {
             Yii::$app->session->setFlash('error', 'Invalid or expired token.');
-            return $this->goHome();
+            return $this->render('_invalid_token');
+        }
+        $tokenModel->markAsUsed();
+        return $this->render('_confirm_email', [
+            'user' => User::findOne(['username' => $tokenModel->user_id]),
+            'isAuthorized' => $isAuthorized,
+        ]);
+
+    }
+    public function actionResetEmail($token, $isAuthorized = false)
+    {
+        $this->layout = '_blank.php';
+
+        $tokenModel = SecurityToken::findByToken($token);
+
+        if (!$tokenModel || $tokenModel->isExpired() || $tokenModel->isUsed()) {
+            Yii::$app->session->setFlash('error', 'Invalid or expired token.');
+            return $this->render('_invalid_token');
         }
 
         $model = new AuthForm();
+        $model->scenario = AuthForm::SCENARIO_RESET_PASSWORD;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // Lakukan proses reset password
-            $user = $tokenModel->getUser();
-            $user->password = Yii::$app->security->generatePasswordHash(md5($model->password));
+            $user = User::findOne(['username' => $tokenModel->user_id]);
+            $user->password = Yii::$app->security->generatePasswordHash(md5($model->newPassword));
 
             if ($user->save()) {
                 // Tandai token sebagai digunakan
                 $tokenModel->markAsUsed();
 
                 Utils::flashSuccess('Password has been reset successfully.');
-                return $this->redirect(['login']);
+                return $isAuthorized ? $this->redirect('index') : $this->redirect(['login']);
             } else {
                 Utils::flashFailed('Failed to reset password.');
             }
@@ -342,6 +354,7 @@ class SiteController extends LayoutController
 
         return $this->render('_reset_password', [
             'model' => $model,
+            'isAuthorized' => $isAuthorized,
         ]);
     }
     public function actionForgotPassword()

@@ -12,7 +12,7 @@ class m240211_233402_create_table_reset_password_tokens extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('reset_password_tokens', [
+        $this->createTable('security_tokens', [
             'id' => $this->primaryKey(),
             'user_id' => $this->string(64)->notNull(),
             'token' => $this->string()->notNull(),

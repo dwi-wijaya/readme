@@ -20,6 +20,7 @@ class AuthForm extends Model
     public $email;
     public $otp;
     public $confirmPassword;
+    public $newPassword;
     public $rememberMe = true;
 
     const SCENARIO_SIGNIN = 'SIGN-IN';
@@ -44,9 +45,9 @@ class AuthForm extends Model
             [['email'], 'validateEmail', 'on' => self::SCENARIO_FORGOT_PASSWORD],
             [['email'], 'unique', 'on' => self::SCENARIO_SIGNUP, 'targetClass' => 'app\models\User', 'message' => 'This email address has already been taken.'],
             [['username'], 'unique', 'on' => self::SCENARIO_SIGNUP, 'targetClass' => '\app\models\User', 'targetAttribute' => 'username', 'message' => 'This username has already been taken.'],
-            [['password','confirmPassword'],'required','on' => self::SCENARIO_RESET_PASSWORD],
+            [['newPassword','confirmPassword'],'required','on' => self::SCENARIO_RESET_PASSWORD],
             ['otp', 'safe'],
-            ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
+            ['confirmPassword', 'compare', 'compareAttribute' => 'newPassword', 'message' => "Passwords don't match"],
             // [['password', 'confirmPassword'], 'string', 'min' => 8],
             ['email', 'email'],
             ['username', 'string', 'min' => 3, 'max' => 255],
