@@ -29,10 +29,19 @@ $alertstat = [
     Utils::STAT_REVISION
 ];
 
-in_array(User::me()->role->item_name, [Utils::ROLE_AUTHOR, Utils::ROLE_ADMIN]) ? $toolbar = ['toolbar' => [
-    ['Styles', '-',]
-]] : null;
-in_array(User::me()->role->item_name, [Utils::ROLE_EDITOR, Utils::ROLE_ADMIN]) ? $toolbar = ['extraPlugins' => 'colorbutton,colordialog,iframe,justify'] : null;
+$currentUserRole = User::me()->role->item_name;
+
+if (in_array($currentUserRole, [Utils::ROLE_AUTHOR, Utils::ROLE_ADMIN])) {
+    $toolbar = [
+        'extraPlugins' => 'codesnippet',
+        'codeSnippet_theme' => 'monokai_sublime',
+        'toolbar' => [
+            ['Styles', '-']
+        ],
+    ];
+} elseif (in_array($currentUserRole, [Utils::ROLE_EDITOR, Utils::ROLE_ADMIN])) {
+    $toolbar = ['extraPlugins' => 'colorbutton,colordialog,iframe,justify'];
+}
 
 ?>
 <style>
