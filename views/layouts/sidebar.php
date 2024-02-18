@@ -6,13 +6,15 @@ use app\models\User;
 use mdm\admin\components\Helper;
 use richardfan\widget\JSRegister;
 use yii\helpers\Url;
+
 $this->registerCssFile('@web/css/pages/sidebar.css');
 ?>
 
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #3652AD !important;">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <span class="brand-text font-weight-bold">Readme</span>
+    <a href="<?= Url::home()?>" style="transition: none !important;background: transparent !important;" class="brand-link" >
+        <i style="margin-top: 2px;font-size: 30px;color: #565656;" class="fa-regular fa-newspaper brand-image text-main elevation-3"></i>
+        <span class="brand-text font-weight-light text-main ml-1">Readme</span>
     </a>
 
     <!-- Sidebar -->
@@ -37,7 +39,7 @@ $this->registerCssFile('@web/css/pages/sidebar.css');
 
 
             $item = mstMenu::getNavbarLTE();
-            
+
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => $item,
             ]);

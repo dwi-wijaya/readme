@@ -109,15 +109,13 @@ class mstMenu extends \yii\db\ActiveRecord
 
     public static function getNativenavbar()
     {
-        $guest = mstMenu::find()->where(['like', 'upper(route)', strtoupper('site/')])->orderBy(['order' => SORT_ASC])->all();
-        $menu = mstMenu::find()->where('parent is null')->orderBy(['name' => SORT_ASC])->groupBy(['idmenu', 'type'])->all();
-
-        return ['guest' => $guest, 'authorized' => $menu];
+        $guest = mstMenu::find()->where(['type' => mstMenu::TYPE_GUEST])->orderBy(['order' => SORT_ASC])->all();
+        return $guest;
     }
     public static function getNavbarLTE()
     {
-        $menu = mstMenu::find()->where(['is_dropdown' => self::PARENT_MENU])->orderBy('CAST(`order` AS UNSIGNED) asc')->groupBy(['idmenu', 'type'])->all();
-        $child = mstMenu::find()->where(['is_dropdown' => self::DROPDOWN_MENU])->orderBy(['CAST(`order` AS UNSIGNED)' => SORT_ASC])->groupBy(['idmenu', 'type'])->all();
+        $menu = mstMenu::find()->where(['type' => mstMenu::TYPE_AUTHORIZED,'is_dropdown' => self::PARENT_MENU])->orderBy('CAST(`order` AS UNSIGNED) asc')->groupBy(['idmenu', 'type'])->all();
+        $child = mstMenu::find()->where(['type' => mstMenu::TYPE_AUTHORIZED,'is_dropdown' => self::DROPDOWN_MENU])->orderBy(['CAST(`order` AS UNSIGNED)' => SORT_ASC])->groupBy(['idmenu', 'type'])->all();
         $items = $menus = [];
         // echo '<pre>';print_r($menu);die;
 
@@ -138,6 +136,7 @@ class mstMenu extends \yii\db\ActiveRecord
         }
         // echo '<pre>';print_r($items);die;
 
-        return Helper::filter($items);
+        // return Helper::filter($items);
+        return $items;
     }
 }

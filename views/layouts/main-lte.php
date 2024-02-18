@@ -65,11 +65,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <!-- /.content-wrapper -->
 
         <!-- Control Sidebar -->
-        <?php if (Url::current() == '/article/create' || preg_match('/update\?id=\d+/', Url::current())) : ?>
 
-            <?php // $this->render('control-sidebar') ?>
+            <?= $this->render('control-sidebar') ?>
             <!-- /.control-sidebar -->
-        <?php endif ?>
 
         <!-- Main Footer -->
         <?= $this->render('footer') ?>

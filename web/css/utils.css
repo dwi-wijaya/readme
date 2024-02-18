@@ -1,0 +1,12 @@
+.bg-main{
+    background-color: rgb(230 115 115) !important;
+    color: white !important;
+}
+.btn-main{
+    color: rgb(230 115 115) !important;
+    border:1px solid rgb(230 115 115) !important;
+    background-color: white !important;
+}
+.text-main{
+    color: rgb(230 115 115) !important;
+}

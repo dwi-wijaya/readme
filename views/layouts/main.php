@@ -76,7 +76,7 @@ $profileImg = Yii::$app->user->isGuest ? Utils::baseUploadsStock('user.png') : U
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto" style="gap: 5px;">
                     <?php foreach ($menu as $m) : ?>
-                        <li class="nav-item active ">
+                        <li class="nav-item">
                             <a class="nav-link btn-orange text-white p-2" href="<?= Url::to([$m['route']]) ?>">
                                 <span class="fa fa-<?= $m['icon'] ?>"></span> &nbsp; <?= $m['name']; ?>
                             </a>

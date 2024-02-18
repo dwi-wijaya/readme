@@ -50,7 +50,7 @@
 }
 
 .card-guide-list:hover {
-    background-color: rgb(203 80 80);
+    background-color: rgb(230 115 115);
     color: white !important;
     transform: scale(1.005);
     box-shadow: 0 0 10px rgb(242, 242, 242);

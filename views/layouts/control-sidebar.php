@@ -4,7 +4,7 @@
 use app\models\Assets;
 use app\models\User;
 
-$id = User::me()->id;
+$id = User::me()->username;
 $asset = new Assets();
 
 $myasset =  Assets::find()->where(['iduser' => $id])->all();
@@ -26,12 +26,6 @@ $myasset =  Assets::find()->where(['iduser' => $id])->all();
 </style>
 <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
-    <div class="p-3">
-        
-    <?= $this->render('/asset/assets', [
-        'model' => $asset,
-        'assets' => $myasset
-    ]) ?>
-    </div>
+   
 </aside>
 <!-- /.control-sidebar -->
