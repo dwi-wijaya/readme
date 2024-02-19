@@ -25,8 +25,8 @@ class m240208_154106_create_table_trs_trending extends Migration
             $tableOptions
         );
 
-        $this->createIndex('NewTable_idarticlce_IDX', '{{%trs_trending}}', ['idarticle']);
-        $this->createIndex('NewTable_iduser_IDX', '{{%trs_trending}}', ['iduser']);
+        $this->createIndex('trend_item_id_IDX', '{{%trs_trending}}', ['item_id']);
+        $this->createIndex('trend_iduser_IDX', '{{%trs_trending}}', ['iduser']);
     }
 
     public function safeDown()

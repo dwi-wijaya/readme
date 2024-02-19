@@ -3,7 +3,22 @@
 
 use yii\bootstrap4\Breadcrumbs;
 ?>
-<div class="content-wrapper p-3">
+<div class="content-wrapper position-relative">
+<style>
+        .bg-wrapper {
+            display: none;
+            position: absolute;
+            height: 20vh;
+            background: #f17f46;
+            border-radius: 0 0 6px 6px;
+            width: 100%;
+            margin-top: calc(0px);
+            /* Mengikuti margin parent */
+            margin-left: calc(0px);
+            /* Mengikuti margin parent */
+        }
+    </style>
+    <div class="bg-wrapper"></div>
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid ">
@@ -23,9 +38,9 @@ use yii\bootstrap4\Breadcrumbs;
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-
+   
     <!-- Main content -->
-    <div class="content ">
+    <div class="content px-4 position-relative" style="z-index: 1;">
         <?= \dominus77\sweetalert2\Alert::widget(['useSessionFlash' => true]); ?>
         <?= $content ?><!-- /.container-fluid -->
     </div>

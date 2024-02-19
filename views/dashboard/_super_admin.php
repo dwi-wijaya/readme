@@ -4,9 +4,13 @@ use app\models\User;
 
 ?>
 <h3 class="text-white fw-800 mb-0">👋 Hi <?= User::me()->username; ?>,</h3>
-<h6 class="text-white">Time to refine and perfect those articles. Let's make them shine!</h6>
+<small class="text-white ">Welcome back. Enjoy managing your platform efficiently.</small>
 <br><br>
 <style>
+    .bg-wrapper {
+        display: block;
+    }
+
     .btn-main {
         background: #f17f4663;
         color: #f17f46;

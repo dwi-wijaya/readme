@@ -372,17 +372,32 @@ class Utils
             ->send();
         return true;
     }
-    public static function  sensorEmail($email) {
+    public static function  sensorEmail($email)
+    {
         $parts = explode('@', $email);
         $username = $parts[0];
         $domain = $parts[1];
-        
+
         $firstCharacter = substr($username, 0, 1);
         $lastPart = substr($username, -1);
         $stars = str_repeat('*', strlen($username) - 2);
-        
+
         $sensoredUsername = $firstCharacter . $stars . $lastPart;
-        
+
         return $sensoredUsername . '@' . $domain;
+    }
+    public static function grettings()
+    {
+        $time = intval(date('H'));
+
+        if ($time >= 5 && $time < 12) {
+            return "Good Morning";
+        } elseif ($time >= 12 && $time < 18) {
+            return "Good Afternoon";
+        } elseif ($time >= 18 && $time < 24) {
+            return "Good Evening";
+        } else {
+            return "Good Night";
+        }
     }
 }
