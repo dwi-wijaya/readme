@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Class m240211_233402_create_table_reset_password_tokens
  */
-class m240211_233402_create_table_reset_password_tokens extends Migration
+class m240211_233402_create_table_security_tokens extends Migration
 {
     /**
      * {@inheritdoc}
@@ -20,7 +20,7 @@ class m240211_233402_create_table_reset_password_tokens extends Migration
             'status' => $this->tinyInteger()->notNull()->defaultValue(0),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
-        $this->createIndex('tokens_user_id_IDX', '{{%reset_password_tokens}}', ['user_id']);
+        $this->createIndex('tokens_user_id_IDX', '{{%security_tokens}}', ['user_id']);
 
     }
 
