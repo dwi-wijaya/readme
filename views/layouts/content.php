@@ -6,6 +6,7 @@ use yii\bootstrap4\Breadcrumbs;
 <div class="content-wrapper position-relative">
 <style>
         .bg-wrapper {
+            display: none;
             position: absolute;
             height: 20vh;
             background: #f17f46;
@@ -39,7 +40,7 @@ use yii\bootstrap4\Breadcrumbs;
     <!-- /.content-header -->
    
     <!-- Main content -->
-    <div class="content px-3 position-relative" style="z-index: 1;">
+    <div class="content px-4 position-relative" style="z-index: 1;">
         <?= \dominus77\sweetalert2\Alert::widget(['useSessionFlash' => true]); ?>
         <?= $content ?><!-- /.container-fluid -->
     </div>

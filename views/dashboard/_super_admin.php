@@ -7,6 +7,10 @@ use app\models\User;
 <small class="text-white ">Welcome back. Enjoy managing your platform efficiently.</small>
 <br><br>
 <style>
+    .bg-wrapper {
+        display: block;
+    }
+
     .btn-main {
         background: #f17f4663;
         color: #f17f46;
