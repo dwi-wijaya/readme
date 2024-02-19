@@ -3,8 +3,8 @@
 use app\models\User;
 
 ?>
-<h3 class="text-white fw-800 mb-0">👋 Hi <?= User::me()->username; ?>,</h3>
-<h6 class="text-white">Time to refine and perfect those articles. Let's make them shine!</h6>
+<h2 class="text-white fw-800 mb-0">👋 Hi <?= User::me()->username; ?>,</h2>
+<h6 class="text-white">Ready to keep everything running smoothly? Let's dive into management tasks.</h6>
 <br><br>
 <style>
     .btn-main {

@@ -3,11 +3,13 @@
 namespace app\controllers;
 
 use app\models\Assets;
+use app\models\User;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Inflector;
 use yii\helpers\Json;
 
 /**
@@ -40,22 +42,12 @@ class DashboardController extends LayoutController
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Assets::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'idasset' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        
+        $data = [];
+        $role = Inflector::slug(User::me()->role->item_name,'_');
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
+        return $this->render("_$role", [
+            'data' => $data,
         ]);
     }
 
