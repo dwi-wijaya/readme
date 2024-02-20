@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\AuthHelpers;
 use mdm\admin\components\Helper;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -135,7 +136,8 @@ class mstMenu extends \yii\db\ActiveRecord
             $items[$value->parent]['items'][$key]['icon'] = 'fa';
         }
         // echo '<pre>';print_r($items);die;
-
+        $allowedRoutes = AuthItemChild::getAllowedPermissions(User::me()->role->item_name);
+        return AuthHelpers::FilterSidebar($items, $allowedRoutes);
         // return Helper::filter($items);
         return $items;
     }

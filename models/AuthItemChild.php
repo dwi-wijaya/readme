@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "auth_item_child".
@@ -72,5 +73,20 @@ class AuthItemChild extends \yii\db\ActiveRecord
         $this->parent = $parent->name;
         $this->child = $child;
         $this->save();
+    }
+    public static function getAllowedPermissions($userRole)
+    {
+        $isAllowed =  AuthItemChild::find()->alias('auth')
+            ->select([
+                new Expression("case when auth.child not like '/%' then auth.child else auth.parent end as parent"),
+                new Expression("case when auth.child not like '/%' then child.child else auth.child end as child")
+            ])
+            ->leftJoin(['child' => AuthItemChild::tableName()], 'child.parent=auth.child')
+            ->where(['auth.parent' => $userRole])
+            ->asArray()
+            ->indexBy('child')
+            ->all();
+
+        return $isAllowed;
     }
 }

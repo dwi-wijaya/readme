@@ -33,7 +33,7 @@ class User extends Users  implements \yii\web\IdentityInterface
     public function attributeLabels()
     {
         return [
-            'id' => 'Username',
+            'username' => 'Username',
             'first_name' => 'First Name',
             'last_name' => 'Last Name',
             'password' => 'Password',
