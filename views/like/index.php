@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="like-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <div class="card card-body">
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -26,14 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'idarticle',
             'is_like:boolean',
             'created_at',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Like $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'idlike' => $model->idlike]);
-                 }
-            ],
         ],
     ]); ?>
-
+    </div>
 
 </div>

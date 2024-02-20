@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /** @var app\models\mstReason $model */
 
 $this->title = 'Create Mst Reason';
-$this->params['breadcrumbs'][] = ['label' => 'Mst Reasons', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Reasons', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mst-reason-create">

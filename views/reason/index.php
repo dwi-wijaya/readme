@@ -10,7 +10,8 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Mst Reasons';
+$this->title = 'Reasons';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mst-reason-index">
     <div class="card card-body b-10">

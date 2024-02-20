@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var app\models\mstTag $model */
 
 $this->title = $model->idtag;
-$this->params['breadcrumbs'][] = ['label' => 'Mst Tags', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Tags', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>

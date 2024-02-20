@@ -15,18 +15,17 @@ $rules = array_combine($rules, $rules);
 unset($rules[RouteRule::RULE_NAME]);
 ?>
 <div class="role-index">
-    <div class="card card-body ">
-
-        <div class="row mt-3">
-            <div class="col">
-                <h2 class="title-content"><?= Html::encode($this->title) ?></h2>
-            </div>
-            <div class="col">
-                <p class="float-right">
-                    <?= Html::a('<i class="fa fa-plus"></i> &nbsp;' . $labels['Item'], ['create'], ['class' => 'btn btn-success']) ?>
-                </p>
-            </div>
+    <div class="row">
+        <div class="col">
+            <h2 class="title-content"><?= Html::encode($this->title) ?></h2>
         </div>
+        <div class="col">
+            <p class="float-right">
+                <?= Html::a('<i class="fa fa-plus"></i> &nbsp;' . $labels['Item'], ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
+        </div>
+    </div>
+    <div class="card card-body ">
         <?=
         GridView::widget([
             'dataProvider' => $dataProvider,

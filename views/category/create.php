@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /** @var app\models\mstCategory $model */
 
 $this->title = 'Create Mst Category';
-$this->params['breadcrumbs'][] = ['label' => 'Mst Categories', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mst-category-create">

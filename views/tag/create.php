@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /** @var app\models\mstTag $model */
 
 $this->title = 'Create Mst Tag';
-$this->params['breadcrumbs'][] = ['label' => 'Mst Tags', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Tags', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mst-tag-create">

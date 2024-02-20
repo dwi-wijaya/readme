@@ -26,17 +26,19 @@ $columns[] = [
 ];
 ?>
 <div class="assignment-index">
+    <h2><?= Html::encode($this->title) ?></h2>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="card card-body">
 
-    <?php Pjax::begin(); ?>
-    <?=
-    GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => $columns,
-    ]);
-    ?>
-    <?php Pjax::end(); ?>
+        <?php Pjax::begin(); ?>
+        <?=
+        GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => $columns,
+        ]);
+        ?>
+        <?php Pjax::end(); ?>
+    </div>
 
 </div>

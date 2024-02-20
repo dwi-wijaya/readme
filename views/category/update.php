@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /** @var app\models\mstCategory $model */
 
 $this->title = 'Update Mst Category: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Mst Categories', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'idcat' => $model->idcat]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

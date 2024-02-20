@@ -15,25 +15,20 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="trending-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <div class="card card-body">
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-            'idtrend',
-            'iduser',
-            'idarticle',
-            'created_at',
-            'liked:boolean',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Trending $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'idtrend' => $model->idtrend]);
-                 }
+                'iduser',
+                'idarticle',
+                'created_at',
+                'liked:boolean',
             ],
-        ],
-    ]); ?>
+        ]); ?>
 
 
+    </div>
 </div>

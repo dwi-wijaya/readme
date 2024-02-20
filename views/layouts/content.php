@@ -3,13 +3,13 @@
 
 use yii\bootstrap4\Breadcrumbs;
 ?>
-<div class="content-wrapper position-relative" style="background-color: #f0f0f0 !important;">
-<style>
+<div class="content-wrapper position-relative">
+    <style>
         .bg-wrapper {
             display: none;
             position: absolute;
             height: 23vh;
-            background: #f17f46;
+            background: #4560c4 ;
             border-radius: 0 0 6px 6px;
             width: 100%;
             margin-top: calc(0px);
@@ -22,11 +22,16 @@ use yii\bootstrap4\Breadcrumbs;
     <!-- Content Header (Page header) -->
     <div class="content-header px-5">
         <div class="container-fluid ">
-            <div class="row mb-2">
+            <div class="row">
 
-                <div class="col-sm-6">
+                <div class="col-sm-6 p-0">
                     <?php
+
                     echo Breadcrumbs::widget([
+                        'homeLink' => [
+                            'label' => Yii::t('yii', 'Dashboard'),
+                            'url' => Yii::$app->homeUrl,
+                        ],
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                         'options' => [
                             'class' => 'breadcrumb float-sm-left'
@@ -38,7 +43,7 @@ use yii\bootstrap4\Breadcrumbs;
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-   
+
     <!-- Main content -->
     <div class="content px-5 position-relative" style="z-index: 1;">
         <?= \dominus77\sweetalert2\Alert::widget(['useSessionFlash' => true]); ?>

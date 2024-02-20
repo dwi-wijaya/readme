@@ -10,6 +10,7 @@ use yii\grid\GridView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Users';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="users-index">
     <div class="card card-body b-10">

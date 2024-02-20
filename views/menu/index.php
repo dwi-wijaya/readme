@@ -1,5 +1,7 @@
 <?php
 
+use app\helpers\AuthHelpers;
+use app\models\AuthItem;
 use app\models\mstMenu;
 use kartik\grid\GridView as GridGridView;
 use yii\helpers\Html;
@@ -12,23 +14,21 @@ use yii\widgets\Menu;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Menu';
-// $this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="navbar-index">
-    <div class="card card-body ">
-
-        <div class="row mt-3">
-            <div class="col">
-                <h2 class="title-content"><?= Html::encode($this->title) ?></h2>
-            </div>
-            <div class="col">
-                <p class="float-right">
-                    <?= Html::a('<i class="fa fa-plus"></i> &nbsp; Menu', ['create'], ['class' => 'btn trans fw-300 text-upper create-btn btn-success', 'style' => 'float:right;']) ?>
-                </p>
-            </div>
+    <div class="row ">
+        <div class="col">
+            <h2 class="title-content"><?= Html::encode($this->title) ?></h2>
         </div>
-
-        <hr>
+        <div class="col">
+            <p class="float-right">
+                <?= Html::a('<i class="fa fa-plus"></i> &nbsp; Menu', ['create'], ['class' => 'btn trans fw-300 text-upper create-btn btn-success', 'style' => 'float:right;']) ?>
+            </p>
+        </div>
+    </div>
+    <div class="card card-body ">
 
         <?= GridGridView::widget([
             'dataProvider' => $dataProvider,

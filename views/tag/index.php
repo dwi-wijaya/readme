@@ -9,7 +9,8 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Mst Tags';
+$this->title = 'Tags';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mst-tag-index">
     <div class="card card-body b-10">
