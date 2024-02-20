@@ -15,7 +15,6 @@ $this->title = $model->title;
 // $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
 // $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
-
 $c_bookmark = $bookmark == 'true' ? 'fa-solid' : 'fa-regular';
 $c_like = $like == 'true' ? 'fa-solid' : 'fa-regular';
 // echo '<pre>';print_r($urlfrom);die;
@@ -48,7 +47,7 @@ $guest_link = Yii::$app->user->isGuest ? Url::to(['site/login']) : '#';
                 <div class="content mt-5">
                     <img class=" b-10 w-100" src="<?= Utils::baseUploadsthumbnail($model->thumbnail); ?>" alt="">
                     <div class="mt-5">
-                        <?= Html::decode($model->content) ?>
+                        <?= ($model->content) ?>
                     </div>
                 </div>
             </div>
@@ -91,12 +90,58 @@ $guest_link = Yii::$app->user->isGuest ? Url::to(['site/login']) : '#';
     </div>
 
 </article>
-<script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
-</script>
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+<script>hljs.highlightAll();</script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <?php JSRegister::begin() ?>
 <script>
+    $(document).ready(function() {
+        // Highlight all code blocks
+        // Select elements with class containing 'language-'
+        $('pre[class*="language-"]').each(function() {
+            // Create a card above each code block
+            var className = $(this).attr('class');
+            className = className.split('-');
+            $(this).css("margin-top", "0px");
+            $(this).css("border-top-left-radius", "0px");
+            $(this).css("border-top-right-radius", "0px");
+            $(this).before(`<div class="code-header-container">${className[1]} <div class="copy-button"><li class="fa-regular fa-clipboard"></li>&nbsp; Copy code</div></div>`);
+
+            // Define code text to copy
+            var codeText = $(this).text();
+
+            // Bind copy functionality to the newly created button
+            $(this).prev('.code-header-container').find('.copy-button').click(function() {
+                var copyButton = $(this);
+                // Reference to the button
+                var tempTextarea = $('<textarea>');
+                // tempTextarea
+                $(this).html('<li class="fa-solid fa-check"></li>&nbsp; Copied!');
+                tempTextarea.text(codeText);
+                $('body').append(tempTextarea);
+
+                // Select and copy the text inside the temporary textarea
+                tempTextarea.select();
+                document.execCommand('copy');
+
+                // Remove the temporary textarea from the DOM
+                tempTextarea.remove();
+
+                // Alert the user that the text has been copied
+                setTimeout(function() {
+                    // Set the text of the button back to "Copy Code"
+                    copyButton.html('<li class="fa-regular fa-clipboard"></li>&nbsp; Copy Code');
+                }, 4000);
+                // Alert the user that the text has been copied
+            });
+
+        });
+    });
     /**
      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
      *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
@@ -106,13 +151,6 @@ $guest_link = Yii::$app->user->isGuest ? Url::to(['site/login']) : '#';
     this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
     */
-    (function() { // DON'T EDIT BELOW THIS LINE
-        var d = document,
-            s = d.createElement('script');
-        s.src = 'https://readme-4.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
 
     $('#bookmark').click(function() {
         var id = $(this).attr('data');

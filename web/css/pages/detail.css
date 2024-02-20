@@ -1,7 +1,18 @@
 article {
     margin-top: 2.5rem;
 }
-
+.code-header-container {
+    position: relative;
+    display: flex;
+    font-size: small;
+    justify-content: space-between;
+    background-color: #494949;
+    border-radius: 5px 5px 0 0 ;
+    color: #b4b4b4;
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+}
 @media (max-width:767px) {
     .utils-action {
         width: 40px !important;
