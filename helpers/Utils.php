@@ -215,8 +215,8 @@ class Utils
             self::STAT_REJECT => 'REJECT',
         ];
         $class = isset($status[$stat]) ? $status[$stat] : 'btn-default';
-
-        return Html::button($statname[$stat], ['class' => 'btn-xs btn b-5 ' . $class]);
+        $status = isset($statname[$stat]) ? $statname[$stat] : '-';
+        return Html::button($status, ['class' => 'btn-xs btn b-5 ' . $class]);
     }
 
     public static function getFlag($stat)
