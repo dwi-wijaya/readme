@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Login';
+$this->title = 'Sign-in';
 ?>
 <style>
     /* .login-page {
@@ -40,15 +40,15 @@ $this->title = 'Login';
             <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => 'Username'])->label(false) ?>
 
             <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password'])->label(false) ?>
-            <p class="">
-                Dont have account yet ? <a href="<?= Url::to(['site/signup',]); ?>"><b>Sign-up</b> </a>
+            <div class="form-group">
+                <?= Html::submitButton('<i class="fa-solid fa-right-to-bracket"></i>&nbsp; Sign-in', ['class' => 'btn btn-block btn-login', 'name' => 'login-button']) ?>
+            </div>
+            <p class="mb-0">
+                Dont have account yet ? <a href="<?= Url::to(['sign-up',]); ?>"><b>Sign-up</b></a>
             </p>
             <a href="<?= Url::to('forgot-password') ?>">
-            <p>Forgot passowrd ?</p>
+                <p>Forgot passowrd ?</p>
             </a>
-            <div class="form-group">
-                <?= Html::submitButton('<i class="fa-solid fa-right-to-bracket"></i> &nbsp;Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
 
             <?php ActiveForm::end(); ?>
         </div>

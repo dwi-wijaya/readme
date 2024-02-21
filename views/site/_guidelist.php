@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 $this->registerCssFile('@web/css/pages/guide.css');
 
 $this->title = 'Readme';
-$checklistRoute = Yii::$app->user->isGuest ? Url::to(['site/login']) : '#';
+$checklistRoute = Yii::$app->user->isGuest ? Url::to(['auth/sign-in']) : '#';
 ?>
 <style>
 

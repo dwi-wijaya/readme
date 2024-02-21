@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Confirm Email';
+$this->title = "Your Link Didn't Work";
 ?>
 
 <div class="site-login text-center">

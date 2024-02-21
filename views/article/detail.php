@@ -18,7 +18,7 @@ $this->title = $model->title;
 $c_bookmark = $bookmark == 'true' ? 'fa-solid' : 'fa-regular';
 $c_like = $like == 'true' ? 'fa-solid' : 'fa-regular';
 // echo '<pre>';print_r($urlfrom);die;
-$guest_link = Yii::$app->user->isGuest ? Url::to(['site/login']) : '#'; 
+$guest_link = Yii::$app->user->isGuest ? Url::to(['auth/sign-in']) : '#'; 
 ?>
 <style>
 

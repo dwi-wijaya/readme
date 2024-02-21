@@ -26,7 +26,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $this->params['met
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/newspaper.svg')]);
 
-$profileUrl = Yii::$app->user->isGuest ? ['site/login'] : ['users/account', 'id' => User::me()->id];
+$profileUrl = Yii::$app->user->isGuest ? ['auth/sign-in'] : ['users/account', 'id' => User::me()->id];
 $profileImg = Yii::$app->user->isGuest ? Utils::baseUploadsStock('user.png') : Utils::baseUploadsStock('user.png');
 ?>
 <?php $this->beginPage() ?>
@@ -98,7 +98,7 @@ $profileImg = Yii::$app->user->isGuest ? Utils::baseUploadsStock('user.png') : U
                 <div class="main-content float-left text-light w-100 w50 mt-3">
                     <h1 class="fw-700">Readme.</h1>
                     <h5 class="mb-3">Learning code by the easy way</h5>
-                    <a href="<?= Url::to(['login']); ?>" class="text-reset text-white btn btn-sign-in">
+                    <a href="<?= Url::to(['auth/sign-in']); ?>" class="text-reset text-white btn btn-sign-in">
                         <li class="fa fa-sign-in"></li>&nbsp; Sign-in / Sign-up
                     </a>
                     <a href="<?= Url::to(['explore']); ?>" class="text-light btn btn-dark-blue ">

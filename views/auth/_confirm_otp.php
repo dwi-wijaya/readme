@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Login';
+$this->title = 'Confirm OTP';
 ?>
 
 <div class="site-login">
@@ -36,7 +36,7 @@ $this->title = 'Login';
             <div class="form-group">
                 <?= Html::submitButton('Confirm', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
             </div>
-            <a class="text-center w-100 text-muted" href="<?= Url::to(['site/forgot-password',]); ?>">
+            <a class="text-center w-100 text-muted" href="<?= Url::to(['forgot-password',]); ?>">
                 <li class="fa fa-chevron-left"></li> &nbsp;Back to forget password?
             </a>
 

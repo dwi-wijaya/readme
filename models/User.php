@@ -113,7 +113,7 @@ class User extends Users  implements \yii\web\IdentityInterface
     public static function getProfile()
     {
         $user = Yii::$app->user->identity;
-        $route = Yii::$app->user->isGuest ?  'site/login' : 'users/account?id=' . $user->username;
+        $route = Yii::$app->user->isGuest ?  'auth/sign-in' : 'users/account?id=' . $user->username;
         // check if the user is a guest or not
         if (Yii::$app->user->isGuest || empty($user->profile_picture)) {
             // use the default image

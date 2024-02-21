@@ -39,13 +39,13 @@ $this->title = 'Sign-up';
             <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password'])->label(false) ?>
             <?= $form->field($model, 'confirmPassword')->passwordInput(['placeholder' => 'Repeat Password'])->label(false) ?>
 
+            <div class="form-group">
+                <?= Html::submitButton('<i class="fa-solid fa-right-to-bracket"></i> &nbsp;Sign-up', ['class' => 'btn btn-login btn-block', 'name' => 'login-button']) ?>
+            </div>
             <p>
-                already have account ? <a href="<?= Url::to(['/site/login',]); ?>"><b>Sign-in</b> </a>
+                already have account ? <a href="<?= Url::to(['/auth/sign-in',]); ?>"><b>Sign-in</b> </a>
             </p>
 
-            <div class="form-group">
-                <?= Html::submitButton('<i class="fa-solid fa-right-to-bracket"></i> &nbsp;Sign-up', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
 
             <?php ActiveForm::end(); ?>
         </div>

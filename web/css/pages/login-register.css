@@ -25,3 +25,11 @@
         width: 90%;
     }
 }
+.btn-login{
+    background-color: #b597f7  !important;
+    color: white !important;
+}
+.btn-login:hover{
+    background-color: #9169e7  !important;
+
+}
